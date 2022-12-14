@@ -1,0 +1,1 @@
+This is a read me file for weather app for Gurzu react native traineeship.
