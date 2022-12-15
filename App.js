@@ -6,13 +6,14 @@
  * @flow strict-local
  */
 
+import {Home} from '@app/screens';
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 
 const App = () => {
   return (
     <View>
-      <Text>App.js</Text>
+      <Home />
     </View>
   );
 };
