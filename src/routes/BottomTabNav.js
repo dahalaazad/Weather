@@ -12,10 +12,15 @@ const BottomTabNav = () => {
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Details') {
-            iconName = focused ? 'md-partly-sunny' : 'md-partly-sunny-outline';
+          switch (route.name) {
+            case 'Home':
+              iconName = focused ? 'home' : 'home-outline';
+              break;
+            case 'Details':
+              iconName = focused ? 'md-partly-sunny' : 'md-partly-sunny';
+              break;
+            default:
+              iconName = 'home';
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
