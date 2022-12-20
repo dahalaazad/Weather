@@ -22,8 +22,10 @@ const BottomTabNav = () => {
             default:
               iconName = 'home';
           }
+
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
       })}>
