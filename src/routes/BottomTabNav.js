@@ -29,6 +29,7 @@ const BottomTabNav = () => {
           title: 'Home',
         }}
       />
+
       <Tab.Screen
         name="Details"
         component={WeatherDetails}
