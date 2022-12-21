@@ -6,15 +6,15 @@
  * @flow strict-local
  */
 
-import {Home} from '@app/screens';
+import BottomTabNav from '@app/routes/BottomTabNav';
 import React from 'react';
-import {View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 
 const App = () => {
   return (
-    <View>
-      <Home />
-    </View>
+    <NavigationContainer>
+      <BottomTabNav />
+    </NavigationContainer>
   );
 };
 
