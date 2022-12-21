@@ -3,17 +3,34 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Home, WeatherDetails} from '@app/screens';
 import {Colors} from '@app/constants';
-import getIcon from '@app/utils/getIcon';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNav = () => {
+  const getIcon = (route, focused) => {
+    let iconName = 'home';
+
+    switch (route.name) {
+      case 'Home':
+        return (iconName = focused ? 'home' : 'home-outline');
+      case 'Search':
+        return (iconName = focused ? 'search' : 'search-outline');
+      default:
+        return iconName;
+    }
+  };
+
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
-          let icon = getIcon(route, focused);
-          return <Ionicons name={icon} size={size} color={color} />;
+          return (
+            <Ionicons
+              name={getIcon(route, focused)}
+              size={size}
+              color={color}
+            />
+          );
         },
 
         headerShown: false,
