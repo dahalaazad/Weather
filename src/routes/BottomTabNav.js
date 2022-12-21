@@ -2,6 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Home, WeatherDetails} from '@app/screens';
+import {Colors} from '@app/constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,8 +17,8 @@ const BottomTabNav = () => {
             case 'Home':
               iconName = focused ? 'home' : 'home-outline';
               break;
-            case 'Details':
-              iconName = focused ? 'md-partly-sunny' : 'md-partly-sunny';
+            case 'Search':
+              iconName = focused ? 'search' : 'search-outline';
               break;
             default:
               iconName = 'home';
@@ -26,7 +27,12 @@ const BottomTabNav = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
 
-        tabBarActiveTintColor: 'tomato',
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: Colors.bottomTabBackgroundColor,
+        },
+
+        tabBarActiveTintColor: Colors.whiteColor,
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen
@@ -38,11 +44,10 @@ const BottomTabNav = () => {
       />
 
       <Tab.Screen
-        name="Details"
+        name="Search"
         component={WeatherDetails}
         options={{
-          title: 'Details',
-          headerShown: false,
+          title: 'Search',
         }}
       />
     </Tab.Navigator>
