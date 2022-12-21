@@ -7,24 +7,30 @@ import {Colors} from '@app/constants';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNav = () => {
+  const getIcon = (route, focused) => {
+    let iconName = 'home';
+
+    switch (route.name) {
+      case 'Home':
+        return (iconName = focused ? 'home' : 'home-outline');
+      case 'Search':
+        return (iconName = focused ? 'search' : 'search-outline');
+      default:
+        return iconName;
+    }
+  };
+
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-
-          switch (route.name) {
-            case 'Home':
-              iconName = focused ? 'home' : 'home-outline';
-              break;
-            case 'Search':
-              iconName = focused ? 'search' : 'search-outline';
-              break;
-            default:
-              iconName = 'home';
-          }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return (
+            <Ionicons
+              name={getIcon(route, focused)}
+              size={size}
+              color={color}
+            />
+          );
         },
 
         headerShown: false,
