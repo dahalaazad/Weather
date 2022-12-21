@@ -39,7 +39,7 @@ const BottomTabNav = () => {
         },
 
         tabBarActiveTintColor: Colors.whiteColor,
-        tabBarInactiveTintColor: 'gray',
+        tabBarInactiveTintColor: Colors.bottomTabInactiveColor,
       })}>
       <Tab.Screen
         name="Home"

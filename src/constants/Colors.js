@@ -5,4 +5,5 @@ export const Colors = {
   bottomTabBackgroundColor: '#7F4CD2',
   whiteColor: '#ffffff',
   blackColor: '#000000',
+  bottomTabInactiveColor: 'rgba(255,255,255,0.7)',
 };
