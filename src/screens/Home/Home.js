@@ -12,6 +12,7 @@ import {CityCard, HourlyCard} from './components';
 import Images from '@app/constants/Images';
 
 const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
+
 const cityCardData = [
   {city: 'Jaipur', temp: '30°C', background: Images.sunriseCardBackground},
   {city: 'Chennai', temp: '35°C', background: Images.rainyCardBackground},
@@ -21,6 +22,7 @@ const cityCardData = [
 
 const Home = () => {
   const renderItemHourly = ({item}) => <HourlyCard time={item} />;
+
   const renderItemCity = ({item}) => (
     <TouchableOpacity style={{paddingHorizontal: 20}}>
       <CityCard
