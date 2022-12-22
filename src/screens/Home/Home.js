@@ -12,9 +12,24 @@ import {CityCard, HourlyCard} from './components';
 import Images from '@app/constants/Images';
 
 const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
+const cityCardData = [
+  {city: 'Jaipur', temp: '30°C', background: Images.sunriseCardBackground},
+  {city: 'Chennai', temp: '35°C', background: Images.rainyCardBackground},
+  {city: 'Mumbai', temp: '45°C', background: Images.sunriseCardBackground},
+  {city: 'Doha', temp: '49°C', background: Images.rainyCardBackground},
+];
 
 const Home = () => {
-  const renderItem = ({item}) => <HourlyCard time={item} />;
+  const renderItemHourly = ({item}) => <HourlyCard time={item} />;
+  const renderItemCity = ({item}) => (
+    <TouchableOpacity style={{paddingHorizontal: 20}}>
+      <CityCard
+        cityName={item.city}
+        temp={item.temp}
+        imageBackground={item.background}
+      />
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
@@ -36,32 +51,19 @@ const Home = () => {
         </View>
 
         <View style={{flex: 1, justifyContent: 'space-around'}}>
-          <View style={[styles.row, styles.spaceAround]}>
-            <View>
-              <TouchableOpacity>
-                <CityCard
-                  cityName="Jaipur"
-                  temp="35°C"
-                  imageBackground={Images.sunriseCardBackground}
-                />
-              </TouchableOpacity>
-            </View>
-
-            <View>
-              <TouchableOpacity>
-                <CityCard
-                  cityName="Chennai"
-                  temp="30°C"
-                  imageBackground={Images.rainyCardBackground}
-                />
-              </TouchableOpacity>
-            </View>
+          <View style={{alignItems: 'center'}}>
+            <FlatList
+              data={cityCardData}
+              renderItem={renderItemCity}
+              horizontal={true}
+              keyExtractor={item => item.city}
+            />
           </View>
 
           <View style={styles.hourlyCardContainer}>
             <FlatList
               data={hourlyData}
-              renderItem={renderItem}
+              renderItem={renderItemHourly}
               horizontal={true}
               keyExtractor={item => item}
             />
