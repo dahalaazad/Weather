@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import React from 'react';
 import {Colors} from '@app/constants';
 import {
@@ -6,11 +6,16 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const CityCard = ({cityName}) => {
+const CityCard = ({cityName, imageBackground}) => {
   return (
-    <View style={styles.container}>
-      <Text>{cityName}</Text>
-    </View>
+    <ImageBackground
+      source={imageBackground}
+      style={styles.container}
+      imageStyle={{borderRadius: 20}}>
+      <Text style={styles.textStyle}>{cityName}</Text>
+
+      <Text style={styles.textStyle}>30°C</Text>
+    </ImageBackground>
   );
 };
 
@@ -18,10 +23,16 @@ export default CityCard;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    backgroundColor: Colors.whiteColor,
-    height: hp('25%'), // 70% of height device screen
-    width: wp('30%'),
-    borderRadius: hp('2%'),
+    flexDirection: 'row',
+    height: hp('25%'),
+    width: wp('40%'),
+    justifyContent: 'space-evenly',
+    paddingTop: 25,
+    borderRadius: 10,
+  },
+  textStyle: {
+    fontSize: 20,
+    color: Colors.whiteColor,
+    fontWeight: '600',
   },
 });

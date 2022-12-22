@@ -1,40 +1,66 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import React from 'react';
 import {Colors} from '@app/constants';
-import {CityCard} from './components';
+import {CityCard, HourlyCard} from './components';
 
 const Home = () => {
   return (
     <View style={styles.container}>
-      <View style={{flex: 1, justifyContent: 'center',paddingHorizontal:20}}>
-        <View style={[styles.row, styles.spaceBetween,]}>
-          <Text style={styles.textStyle}>PEKIN</Text>
+      <ImageBackground
+        source={require('@app/assets/images/night-moon.jpg')}
+        style={{flex: 1}}>
+        <View style={styles.topHalfScreen}>
+          <View style={[styles.row, styles.spaceBetween]}>
+            <Text style={styles.textStyle}>PEKIN</Text>
 
-          <Text style={styles.textStyle}>24 C</Text>
-        </View>
-
-        <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.textStyle}>Current Date</Text>
-
-          <Text style={styles.textStyle}>Clear Sky</Text>
-        </View>
-      </View>
-
-      <View style={{flex: 1, justifyContent: 'space-around'}}>
-        <View style={[styles.row, styles.spaceAround]}>
-          <View>
-            <CityCard cityName="Jaipur" />
+            <Text style={styles.textStyle}>24°C</Text>
           </View>
 
-          <View>
-            <CityCard cityName="Chennai" />
+          <View style={[styles.row, styles.spaceBetween]}>
+            <Text style={styles.smallTextStyle}>7 Nov 2022 Lun 20°C/29°C</Text>
+
+            <Text style={styles.smallTextStyle}>Clear Sky</Text>
           </View>
         </View>
+        <View style={{flex: 1, justifyContent: 'space-around'}}>
+          <View style={[styles.row, styles.spaceAround]}>
+            <View>
+              <TouchableOpacity>
+                <CityCard
+                  cityName="Jaipur"
+                  imageBackground={require('@app/assets/images/Sunrise.png')}
+                />
+              </TouchableOpacity>
+            </View>
 
-        <View style={{alignItems: 'center'}}>
-          <Text style={styles.textStyle}>Daily Cards</Text>
+            <View>
+              <TouchableOpacity>
+                <CityCard
+                  cityName="Chennai"
+                  imageBackground={require('@app/assets/images/Rainy.png')}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.hourlyCardContainer}>
+            {/* Horizontal Flatlist for hourly cards */}
+            <HourlyCard time="Now" />
+
+            <HourlyCard time="1:00PM" />
+
+            <HourlyCard time="1:00PM" />
+
+            <HourlyCard time="1:00PM" />
+          </View>
         </View>
-      </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -47,9 +73,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.mainBackgroundColor,
   },
+  topHalfScreen: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
   textStyle: {
     color: '#fff',
-    // fontFamily:'Poppins',
+    fontFamily: 'Poppins',
+    fontWeight: '600',
+    fontSize: 28,
+  },
+  smallTextStyle: {
+    color: '#fff',
+    fontFamily: 'Poppins',
+    fontWeight: '400',
+    fontSize: 15,
   },
   fullFlex: {
     flex: 1,
@@ -62,5 +101,13 @@ const styles = StyleSheet.create({
   },
   spaceAround: {
     justifyContent: 'space-around',
+  },
+  spaceEvenly: {
+    justifyContent: 'space-evenly',
+  },
+  hourlyCardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
   },
 });

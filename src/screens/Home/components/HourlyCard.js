@@ -4,15 +4,15 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import LinearGradient from 'react-native-linear-gradient';
 import {Colors} from '@app/constants';
 import {WeatherIcon} from '@app/assets/svg';
 
-const HourlyCard = () => {
+const HourlyCard = ({time}) => {
   return (
     <TouchableOpacity style={styles.container}>
       <WeatherIcon />
-      <Text>Time</Text>
+
+      <Text style={styles.textStyle}>{time}</Text>
     </TouchableOpacity>
   );
 };
@@ -26,7 +26,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 5,
     alignItems: 'center',
-    padding: wp('4%'),
+    padding: wp('3%'),
     backgroundColor: Colors.hourlyCardColor,
+  },
+  textStyle: {
+    fontFamily: 'Poppins',
+    fontWeight: '600',
+    color: Colors.whiteColor,
+    fontSize: 15,
   },
 });
