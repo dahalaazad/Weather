@@ -34,12 +34,14 @@ const Home = () => {
             <Text style={styles.smallTextStyle}>Clear Sky</Text>
           </View>
         </View>
+
         <View style={{flex: 1, justifyContent: 'space-around'}}>
           <View style={[styles.row, styles.spaceAround]}>
             <View>
               <TouchableOpacity>
                 <CityCard
                   cityName="Jaipur"
+                  temp="35°C"
                   imageBackground={Images.sunriseCardBackground}
                 />
               </TouchableOpacity>
@@ -49,6 +51,7 @@ const Home = () => {
               <TouchableOpacity>
                 <CityCard
                   cityName="Chennai"
+                  temp="30°C"
                   imageBackground={Images.rainyCardBackground}
                 />
               </TouchableOpacity>

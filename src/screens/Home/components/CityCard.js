@@ -6,7 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const CityCard = ({cityName, imageBackground}) => {
+const CityCard = ({cityName, temp, imageBackground}) => {
   return (
     <ImageBackground
       source={imageBackground}
@@ -14,7 +14,7 @@ const CityCard = ({cityName, imageBackground}) => {
       imageStyle={{borderRadius: 20}}>
       <Text style={styles.textStyle}>{cityName}</Text>
 
-      <Text style={styles.textStyle}>30°C</Text>
+      <Text style={styles.textStyle}>{temp} </Text>
     </ImageBackground>
   );
 };
