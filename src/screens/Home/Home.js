@@ -4,12 +4,18 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import {Colors} from '@app/constants';
 import {CityCard, HourlyCard} from './components';
+import Images from '@app/constants/Images';
+
+const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
 
 const Home = () => {
+  const renderItem = ({item}) => <HourlyCard time={item} />;
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -34,7 +40,7 @@ const Home = () => {
               <TouchableOpacity>
                 <CityCard
                   cityName="Jaipur"
-                  imageBackground={require('@app/assets/images/Sunrise.png')}
+                  imageBackground={Images.sunriseCardBackground}
                 />
               </TouchableOpacity>
             </View>
@@ -43,21 +49,19 @@ const Home = () => {
               <TouchableOpacity>
                 <CityCard
                   cityName="Chennai"
-                  imageBackground={require('@app/assets/images/Rainy.png')}
+                  imageBackground={Images.rainyCardBackground}
                 />
               </TouchableOpacity>
             </View>
           </View>
 
           <View style={styles.hourlyCardContainer}>
-            {/* Horizontal Flatlist for hourly cards */}
-            <HourlyCard time="Now" />
-
-            <HourlyCard time="1:00PM" />
-
-            <HourlyCard time="1:00PM" />
-
-            <HourlyCard time="1:00PM" />
+            <FlatList
+              data={hourlyData}
+              renderItem={renderItem}
+              horizontal={true}
+              keyExtractor={item => item}
+            />
           </View>
         </View>
       </ImageBackground>
