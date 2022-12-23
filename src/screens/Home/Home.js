@@ -18,9 +18,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('@app/assets/images/night-moon.jpg')}
-        style={{flex: 1}}>
+      <ImageBackground source={Images.nightBackground} style={{flex: 1}}>
         <View style={styles.topHalfScreen}>
           <View style={[styles.row, styles.spaceBetween]}>
             <Text style={styles.textStyle}>PEKIN</Text>
