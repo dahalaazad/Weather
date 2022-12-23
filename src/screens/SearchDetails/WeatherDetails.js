@@ -3,6 +3,7 @@ import React from 'react';
 import {Colors} from '@app/constants';
 import Images from '@app/constants/Images';
 import {Search} from './components';
+import {SunIcon} from '@app/assets/svg';
 
 const WeatherDetails = () => {
   return (
@@ -13,17 +14,58 @@ const WeatherDetails = () => {
         </View>
 
         <View style={styles.bottomHalf}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingHorizontal: 25,
-            }}>
-            <Text>8°C</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.bigText}>8°C</Text>
+
+            <View style={{alignItems: 'center'}}>
+              <SunIcon />
+
+              <Text style={styles.weatherOutlookText}>Clear Sky</Text>
+            </View>
+          </View>
+
+          <View style={{justifyContent: 'center'}}>
             <View>
-              <Text>Icon</Text>
-              <Text>Clear Sky</Text>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View>
+                  <Text style={styles.weatherCategoryText}>Pressure</Text>
+
+                  <Text style={styles.weatherDataText}>800hcpa</Text>
+                </View>
+
+                <View style={{paddingRight: 30}}>
+                  <Text style={styles.weatherCategoryText}>Humidity</Text>
+
+                  <Text style={styles.weatherDataText}>20mm</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.weatherCategoryText}>Precipitation</Text>
+
+                  <Text style={styles.weatherDataText}>56%</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View>
+              <Text>Air Quality</Text>
+
+              <Text style={styles.weatherDataText}>34</Text>
+            </View>
+
+            <View>
+              <Text>Wind Speed</Text>
+
+              <Text style={styles.weatherDataText}>4km/h</Text>
+            </View>
+
+            <View>
+              <Text>Visibility</Text>
+
+              <Text style={styles.weatherDataText}>11 km</Text>
             </View>
           </View>
         </View>
@@ -44,9 +86,30 @@ const styles = StyleSheet.create({
   },
   bottomHalf: {
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
+    paddingHorizontal: 25,
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+  },
+  bigText: {
+    fontFamily: 'Poppins',
+    fontSize: 72,
+    fontWeight: '700',
+  },
+  weatherCategoryText: {
+    fontFamily: 'Poppins',
+    fontSize: 12,
+    fontWeight: '400',
+  },
+  weatherDataText: {
+    fontFamily: 'Poppins',
+    fontSize: 24,
+    fontWeight: '400',
+  },
+  weatherOutlookText: {
+    fontFamily: 'Poppins',
+    fontSize: 24,
+    fontWeight: '600',
   },
 });
