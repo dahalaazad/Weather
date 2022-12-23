@@ -14,8 +14,8 @@ import Images from '@app/constants/Images';
 const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
 
 const cityCardData = [
-  {city: 'Jaipur', temp: '30°C', background: Images.sunriseCardBackground},
-  {city: 'Chennai', temp: '35°C', background: Images.rainyCardBackground},
+  {city: 'Kathmandu', temp: '30°C', background: Images.sunriseCardBackground},
+  {city: 'Gusingal', temp: '35°C', background: Images.rainyCardBackground},
   {city: 'Mumbai', temp: '45°C', background: Images.sunriseCardBackground},
   {city: 'Doha', temp: '49°C', background: Images.rainyCardBackground},
 ];
@@ -56,6 +56,7 @@ const Home = () => {
               data={cityCardData}
               renderItem={renderItemCity}
               horizontal={true}
+              showsHorizontalScrollIndicator={false}
               keyExtractor={item => item.city}
             />
           </View>
@@ -65,6 +66,7 @@ const Home = () => {
               data={hourlyData}
               renderItem={renderItemHourly}
               horizontal={true}
+              showsHorizontalScrollIndicator={false}
               keyExtractor={item => item}
             />
           </View>
