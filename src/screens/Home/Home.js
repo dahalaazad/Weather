@@ -7,15 +7,18 @@ import {
   FlatList,
 } from 'react-native';
 import React from 'react';
-import {Colors} from '@app/constants';
+import {Colors, Images} from '@app/constants';
 import {CityCard, HourlyCard} from './components';
-import Images from '@app/constants/Images';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
 
 const cityCardData = [
-  {city: 'Jaipur', temp: '30°C', background: Images.sunriseCardBackground},
-  {city: 'Chennai', temp: '35°C', background: Images.rainyCardBackground},
+  {city: 'Kathmandu', temp: '30°C', background: Images.sunriseCardBackground},
+  {city: 'Gusingal', temp: '35°C', background: Images.rainyCardBackground},
   {city: 'Mumbai', temp: '45°C', background: Images.sunriseCardBackground},
   {city: 'Doha', temp: '49°C', background: Images.rainyCardBackground},
 ];
@@ -24,7 +27,7 @@ const Home = () => {
   const renderItemHourly = ({item}) => <HourlyCard time={item} />;
 
   const renderItemCity = ({item}) => (
-    <TouchableOpacity style={{paddingHorizontal: 20}}>
+    <TouchableOpacity style={{paddingHorizontal: hp('3%')}}>
       <CityCard
         cityName={item.city}
         temp={item.temp}
@@ -35,9 +38,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('@app/assets/images/night-moon.jpg')}
-        style={{flex: 1}}>
+      <ImageBackground source={Images.nightBackground} style={{flex: 1}}>
         <View style={styles.topHalfScreen}>
           <View style={[styles.row, styles.spaceBetween]}>
             <Text style={styles.textStyle}>PEKIN</Text>
@@ -52,12 +53,13 @@ const Home = () => {
           </View>
         </View>
 
-        <View style={{flex: 1, justifyContent: 'space-around'}}>
+        <View style={styles.bottomHalfScreen}>
           <View style={{alignItems: 'center'}}>
             <FlatList
               data={cityCardData}
               renderItem={renderItemCity}
               horizontal={true}
+              showsHorizontalScrollIndicator={false}
               keyExtractor={item => item.city}
             />
           </View>
@@ -67,6 +69,7 @@ const Home = () => {
               data={hourlyData}
               renderItem={renderItemHourly}
               horizontal={true}
+              showsHorizontalScrollIndicator={false}
               keyExtractor={item => item}
             />
           </View>
@@ -87,7 +90,11 @@ const styles = StyleSheet.create({
   topHalfScreen: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: hp('2%'),
+  },
+  bottomHalfScreen: {
+    flex: 1,
+    justifyContent: 'space-around',
   },
   textStyle: {
     color: '#fff',
