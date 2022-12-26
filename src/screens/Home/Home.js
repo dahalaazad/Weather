@@ -13,6 +13,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useSelector} from 'react-redux';
 
 const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
 
@@ -24,6 +25,8 @@ const cityCardData = [
 ];
 
 const Home = () => {
+  const weather = useSelector(state => state.weather);
+
   const renderItemHourly = ({item}) => <HourlyCard time={item} />;
 
   const renderItemCity = ({item}) => (
