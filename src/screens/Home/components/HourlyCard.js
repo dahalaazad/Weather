@@ -10,7 +10,9 @@ import {WeatherIcon} from '@app/assets/svg';
 const HourlyCard = ({time}) => {
   return (
     <TouchableOpacity style={styles.container}>
-      <WeatherIcon />
+      <View style={{paddingLeft: hp('2%')}}>
+        <WeatherIcon />
+      </View>
 
       <Text style={styles.textStyle}>{time}</Text>
     </TouchableOpacity>
@@ -26,7 +28,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 5,
     alignItems: 'center',
-    padding: wp('3%'),
+    height: hp('11%'),
+    width: wp('20%'),
     backgroundColor: Colors.hourlyCardColor,
   },
   textStyle: {
