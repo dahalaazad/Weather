@@ -224,11 +224,11 @@ android {
             keyPassword 'android'
         }
         release {
-            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
-                storeFile file(MYAPP_UPLOAD_STORE_FILE)
-                storePassword MYAPP_UPLOAD_STORE_PASSWORD
-                keyAlias MYAPP_UPLOAD_KEY_ALIAS
-                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            if (project.hasProperty('WEATHER_APP_UPLOAD_STORE_FILE')) {
+                storeFile file(WEATHER_APP_UPLOAD_STORE_FILE)
+                storePassword WEATHER_APP_UPLOAD_STORE_PASSWORD
+                keyAlias WEATHER_APP_UPLOAD_KEY_ALIAS
+                keyPassword WEATHER_APP_UPLOAD_KEY_PASSWORD
             }
         }        
     }
