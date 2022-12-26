@@ -25,8 +25,7 @@ const WeatherDetails = () => {
 
           <View style={{justifyContent: 'center'}}>
             <View>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={styles.weatherDataContainer}>
                 <View>
                   <Text style={styles.weatherCategoryText}>Pressure</Text>
 
@@ -48,7 +47,7 @@ const WeatherDetails = () => {
             </View>
           </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={styles.weatherDataContainer}>
             <View>
               <Text>Air Quality</Text>
 
@@ -115,4 +114,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
   },
+  weatherDataContainer: {flexDirection: 'row', justifyContent: 'space-between'},
 });
