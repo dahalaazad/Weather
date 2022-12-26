@@ -36,10 +36,16 @@ const BottomTabNav = () => {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: Colors.bottomTabBackgroundColor,
+          paddingTop: 5,
         },
 
         tabBarActiveTintColor: Colors.whiteColor,
         tabBarInactiveTintColor: Colors.bottomTabInactiveColor,
+
+        tabBarLabelStyle: {
+          fontSize: 12,
+          paddingBottom: 5,
+        },
       })}>
       <Tab.Screen
         name="Home"
