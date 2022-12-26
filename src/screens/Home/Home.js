@@ -7,9 +7,8 @@ import {
   FlatList,
 } from 'react-native';
 import React from 'react';
-import {Colors} from '@app/constants';
+import {Colors, Images} from '@app/constants';
 import {CityCard, HourlyCard} from './components';
-import Images from '@app/constants/Images';
 
 const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
 
