@@ -13,7 +13,7 @@ const WeatherDetails = () => {
         </View>
 
         <View style={styles.bottomHalf}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={styles.weatherIconContainer}>
             <Text style={styles.bigText}>8°C</Text>
 
             <View style={{alignItems: 'center'}}>
@@ -90,6 +90,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+  },
+  weatherIconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   bigText: {
     fontFamily: 'Poppins',
