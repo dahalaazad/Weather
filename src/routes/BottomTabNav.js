@@ -37,6 +37,7 @@ const BottomTabNav = () => {
         tabBarStyle: {
           backgroundColor: Colors.bottomTabBackgroundColor,
           paddingTop: 5,
+          height: 55,
         },
 
         tabBarActiveTintColor: Colors.whiteColor,
