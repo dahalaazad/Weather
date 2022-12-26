@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: hp('2%'),
     justifyContent: 'center',
-    marginHorizontal: 5,
+    marginHorizontal: hp('1%'),
     alignItems: 'center',
     height: hp('11%'),
-    width: wp('20%'),
+    width: wp('19%'),
     backgroundColor: Colors.hourlyCardColor,
   },
   textStyle: {
