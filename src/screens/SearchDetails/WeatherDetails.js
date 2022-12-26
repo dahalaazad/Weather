@@ -1,7 +1,6 @@
 import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import React from 'react';
-import {Colors} from '@app/constants';
-import Images from '@app/constants/Images';
+import {Colors, Images} from '@app/constants';
 import {Search} from './components';
 import {SunIcon} from '@app/assets/svg';
 
