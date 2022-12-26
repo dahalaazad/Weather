@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import React from 'react';
 import {Colors, Images} from '@app/constants';
-import {Search} from './components';
+import {Details, Search} from './components';
 import {SunIcon} from '@app/assets/svg';
 
 const WeatherDetails = () => {
@@ -26,45 +26,23 @@ const WeatherDetails = () => {
           <View style={{justifyContent: 'center'}}>
             <View>
               <View style={styles.weatherDataContainer}>
-                <View>
-                  <Text style={styles.weatherCategoryText}>Pressure</Text>
-
-                  <Text style={styles.weatherDataText}>800hcpa</Text>
-                </View>
+                <Details title="Pressure" value="800hcpa" />
 
                 <View style={{paddingRight: 30}}>
-                  <Text style={styles.weatherCategoryText}>Humidity</Text>
-
-                  <Text style={styles.weatherDataText}>20mm</Text>
+                  <Details title="Humidity" value="20mm" />
                 </View>
 
-                <View>
-                  <Text style={styles.weatherCategoryText}>Precipitation</Text>
-
-                  <Text style={styles.weatherDataText}>56%</Text>
-                </View>
+                <Details title="Precipitaion" value="56%" />
               </View>
             </View>
           </View>
 
           <View style={styles.weatherDataContainer}>
-            <View>
-              <Text>Air Quality</Text>
+            <Details title="Air Quality" value="34" />
 
-              <Text style={styles.weatherDataText}>34</Text>
-            </View>
+            <Details title="Wind Speed" value="4km/h" />
 
-            <View>
-              <Text>Wind Speed</Text>
-
-              <Text style={styles.weatherDataText}>4km/h</Text>
-            </View>
-
-            <View>
-              <Text>Visibility</Text>
-
-              <Text style={styles.weatherDataText}>11 km</Text>
-            </View>
+            <Details title="Visibility" value="11 km" />
           </View>
         </View>
       </ImageBackground>

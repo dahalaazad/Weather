@@ -9,6 +9,10 @@ import {
 import React from 'react';
 import {Colors, Images} from '@app/constants';
 import {CityCard, HourlyCard} from './components';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
 
@@ -23,7 +27,7 @@ const Home = () => {
   const renderItemHourly = ({item}) => <HourlyCard time={item} />;
 
   const renderItemCity = ({item}) => (
-    <TouchableOpacity style={{paddingHorizontal: 20}}>
+    <TouchableOpacity style={{paddingHorizontal: hp('3%')}}>
       <CityCard
         cityName={item.city}
         temp={item.temp}
@@ -49,7 +53,7 @@ const Home = () => {
           </View>
         </View>
 
-        <View style={{flex: 1, justifyContent: 'space-around'}}>
+        <View style={styles.bottomHalfScreen}>
           <View style={{alignItems: 'center'}}>
             <FlatList
               data={cityCardData}
@@ -86,7 +90,11 @@ const styles = StyleSheet.create({
   topHalfScreen: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: hp('2%'),
+  },
+  bottomHalfScreen: {
+    flex: 1,
+    justifyContent: 'space-around',
   },
   textStyle: {
     color: '#fff',
