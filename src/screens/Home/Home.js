@@ -25,7 +25,7 @@ const cityCardData = [
 ];
 
 const Home = () => {
-  const weather = useSelector(state => state.weather);
+  const weather = useSelector(state => state?.weather || {});
 
   const renderItemHourly = ({item}) => <HourlyCard time={item} />;
 
