@@ -6,16 +6,16 @@ import {
   ImageBackground,
   FlatList,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Colors, Images} from '@app/constants';
 import {CityCard, HourlyCard} from './components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {useSelector} from 'react-redux';
-
-const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
+import {useSelector, useDispatch} from 'react-redux';
+import {getWeather} from '@app/redux/slices';
+import moment from 'moment';
 
 const cityCardData = [
   {city: 'Kathmandu', temp: '30°C', background: Images.sunriseCardBackground},
@@ -25,9 +25,22 @@ const cityCardData = [
 ];
 
 const Home = () => {
+  const dispatch = useDispatch();
+
   const weather = useSelector(state => state?.weather || {});
 
-  const renderItemHourly = ({item}) => <HourlyCard time={item} />;
+  const hourlyCardData = weather?.data?.hourly?.slice(0, 12) || [];
+
+  useEffect(() => {
+    dispatch(getWeather());
+  }, []);
+
+  const renderItemHourly = ({item}) => (
+    <HourlyCard
+      icon={item?.weather[0]?.icon}
+      time={moment.unix(item?.dt).format('h:mm A')}
+    />
+  );
 
   const renderItemCity = ({item}) => (
     <TouchableOpacity style={{paddingHorizontal: hp('3%')}}>
@@ -41,40 +54,56 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={Images.nightBackground} style={{flex: 1}}>
-        <View style={styles.topHalfScreen}>
-          <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.textStyle}>PEKIN</Text>
+      <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
+        <View style={styles.fullScreenShadow}>
+          <View style={styles.topHalfScreen}>
+            <View style={[styles.row, styles.spaceBetween]}>
+              <Text style={styles.textStyle}>{weather?.cityName} </Text>
 
-            <Text style={styles.textStyle}>24°C</Text>
+              <Text style={styles.textStyle}>
+                {`${Math.round(weather?.data?.current?.temp)}°C`}
+              </Text>
+            </View>
+
+            <View style={[styles.row, styles.spaceBetween]}>
+              <View style={[styles.row, styles.spaceAround]}>
+                <Text style={styles.smallTextStyle}>
+                  {moment.unix(weather?.data?.current.dt).format('D MMM YYYY')}
+
+                  {'   '}
+
+                  {`${Math.round(
+                    weather?.data?.daily[0]?.temp?.min,
+                  )}°C/${Math.round(weather?.data?.daily[0]?.temp?.max)}°C`}
+                </Text>
+              </View>
+
+              <Text style={styles.smallTextStyle}>
+                {weather?.data?.current?.weather[0]?.description}
+              </Text>
+            </View>
           </View>
 
-          <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.smallTextStyle}>7 Nov 2022 Lun 20°C/29°C</Text>
+          <View style={styles.bottomHalfScreen}>
+            <View style={{alignItems: 'center'}}>
+              <FlatList
+                data={cityCardData}
+                renderItem={renderItemCity}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={item => item.city}
+              />
+            </View>
 
-            <Text style={styles.smallTextStyle}>Clear Sky</Text>
-          </View>
-        </View>
-
-        <View style={styles.bottomHalfScreen}>
-          <View style={{alignItems: 'center'}}>
-            <FlatList
-              data={cityCardData}
-              renderItem={renderItemCity}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item.city}
-            />
-          </View>
-
-          <View style={styles.hourlyCardContainer}>
-            <FlatList
-              data={hourlyData}
-              renderItem={renderItemHourly}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item}
-            />
+            <View style={styles.hourlyCardContainer}>
+              <FlatList
+                data={hourlyCardData}
+                renderItem={renderItemHourly}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={item => item?.dt}
+              />
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -88,7 +117,10 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-around',
     flex: 1,
-    backgroundColor: Colors.mainBackgroundColor,
+  },
+  fullScreenShadow: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
   },
   topHalfScreen: {
     flex: 1,

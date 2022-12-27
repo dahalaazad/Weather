@@ -1,6 +1,7 @@
 export const Images = {
-  nightBackground: require('@app/assets/images/night-moon.jpg'),
+  nightBackground: require('@app/assets/images/full-moon.jpg'),
   rainyCardBackground: require('@app/assets/images/Rainy.png'),
   sunriseCardBackground: require('@app/assets/images/Sunrise.png'),
   searchDetailBackground: require('@app/assets/images/moon-detail.jpg'),
+  sunnyDayBackground: require('@app/assets/images/sunny-sky.jpg'),
 };
