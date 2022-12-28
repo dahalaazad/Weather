@@ -55,6 +55,14 @@ const Home = () => {
     </TouchableOpacity>
   );
 
+  const capitalizeFirstLetterInWords = str =>
+    str
+      ? str
+          .split(' ')
+          .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+          .join(' ')
+      : str;
+
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
@@ -85,12 +93,9 @@ const Home = () => {
               </View>
 
               <Text style={styles.smallTextStyle}>
-                {weather?.data?.current?.weather[0]?.description
-                  .charAt(0)
-                  .toUpperCase()
-                  .concat(
-                    weather?.data?.current?.weather[0]?.description?.slice(1),
-                  ) || ''}
+                {capitalizeFirstLetterInWords(
+                  weather?.data?.current?.weather[0]?.description,
+                ) || ''}
               </Text>
             </View>
           </View>
