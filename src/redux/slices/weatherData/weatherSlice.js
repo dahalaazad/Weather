@@ -30,18 +30,12 @@ export const getWeather = createAsyncThunk(
 export const weatherSlice = createSlice({
   name: 'weather',
   initialState,
-  reducers: {
-    setCityWeather: (state, action) => {
-      return {cityWeather: action.payload};
-    },
-  },
+  reducers: {},
   extraReducers: {
     [getWeather.fulfilled]: (state, action) => {
       return action.payload;
     },
   },
 });
-
-export const {setCityWeather} = weatherSlice.actions;
 
 export default weatherSlice.reducer;
