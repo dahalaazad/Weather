@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: hp('11%'),
     width: wp('19%'),
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(135, 206, 235,0.4)',
   },
   textStyle: {
     fontFamily: 'Poppins',
