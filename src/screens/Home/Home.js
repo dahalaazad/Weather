@@ -86,8 +86,8 @@ const Home = () => {
 
               <Text style={styles.smallTextStyle}>
                 {capitalizeFirstLetterInWords(
-                  current?.weather[0]?.description,
-                ) || ''}
+                  current?.weather[0]?.description || '',
+                )}
               </Text>
             </View>
           </View>
