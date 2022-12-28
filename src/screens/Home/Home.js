@@ -6,75 +6,112 @@ import {
   ImageBackground,
   FlatList,
 } from 'react-native';
-import React from 'react';
-import {Colors, Images} from '@app/constants';
+import React, {useEffect} from 'react';
+import {Colors, Images, capitalizeFirstLetterInWords} from '@app/constants';
 import {CityCard, HourlyCard} from './components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {useSelector} from 'react-redux';
-
-const hourlyData = ['Now', '1:00PM', '2:00PM', '3:00PM', '4:00PM'];
-
-const cityCardData = [
-  {city: 'Kathmandu', temp: '30°C', background: Images.sunriseCardBackground},
-  {city: 'Gusingal', temp: '35°C', background: Images.rainyCardBackground},
-  {city: 'Mumbai', temp: '45°C', background: Images.sunriseCardBackground},
-  {city: 'Doha', temp: '49°C', background: Images.rainyCardBackground},
-];
+import {useSelector, useDispatch} from 'react-redux';
+import {getWeather} from '@app/redux/slices';
+import moment from 'moment';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const weather = useSelector(state => state?.weather || {});
 
-  const renderItemHourly = ({item}) => <HourlyCard time={item} />;
+  const {cityName} = weather || {};
+  const {current, daily, hourly} = weather?.data || {};
+
+  const cityCardData = [
+    {
+      city: 'Kathmandu',
+      temp: current?.temp || 0,
+      background: Images.sunriseCardBackground,
+    },
+    {city: 'London', temp: 35, background: Images.rainyCardBackground},
+    {city: 'Mumbai', temp: 45, background: Images.sunriseCardBackground},
+    {city: 'Doha', temp: 49, background: Images.rainyCardBackground},
+  ];
+
+  const hourlyCardData = hourly?.slice(0, 12) || [];
+
+  useEffect(() => {
+    dispatch(getWeather('Patan'));
+  }, []);
+
+  const renderItemHourly = ({item}) => (
+    <HourlyCard
+      icon={item?.weather[0]?.icon || ''}
+      time={moment.unix(item?.dt || 0).format('h:mm A')}
+    />
+  );
 
   const renderItemCity = ({item}) => (
     <TouchableOpacity style={{paddingHorizontal: hp('3%')}}>
       <CityCard
-        cityName={item.city}
-        temp={item.temp}
-        imageBackground={item.background}
+        cityName={item?.city}
+        temp={item?.temp}
+        imageBackground={item?.background}
       />
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={Images.nightBackground} style={{flex: 1}}>
-        <View style={styles.topHalfScreen}>
-          <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.textStyle}>PEKIN</Text>
+      <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
+        <View style={styles.fullScreenShadow}>
+          <View style={styles.topHalfScreen}>
+            <View style={[styles.row, styles.spaceBetween]}>
+              <Text style={styles.textStyle}>{cityName || ''} </Text>
 
-            <Text style={styles.textStyle}>24°C</Text>
+              <Text style={styles.textStyle}>
+                {`${Math.round(current?.temp || 0)}°C`}
+              </Text>
+            </View>
+
+            <View style={[styles.row, styles.spaceBetween]}>
+              <View style={[styles.row, styles.spaceAround]}>
+                <Text style={styles.smallTextStyle}>
+                  {moment.unix(current?.dt || 0).format('D MMM YYYY')}
+
+                  {'   '}
+
+                  {`${Math.round(daily?.temp?.min || 0)}°C/${Math.round(
+                    daily?.temp?.max || 0,
+                  )}°C`}
+                </Text>
+              </View>
+
+              <Text style={styles.smallTextStyle}>
+                {capitalizeFirstLetterInWords(
+                  current?.weather[0]?.description || '',
+                )}
+              </Text>
+            </View>
           </View>
 
-          <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.smallTextStyle}>7 Nov 2022 Lun 20°C/29°C</Text>
+          <View style={styles.bottomHalfScreen}>
+            <View style={{alignItems: 'center'}}>
+              <FlatList
+                data={cityCardData}
+                renderItem={renderItemCity}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={item => item.city}
+              />
+            </View>
 
-            <Text style={styles.smallTextStyle}>Clear Sky</Text>
-          </View>
-        </View>
-
-        <View style={styles.bottomHalfScreen}>
-          <View style={{alignItems: 'center'}}>
-            <FlatList
-              data={cityCardData}
-              renderItem={renderItemCity}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item.city}
-            />
-          </View>
-
-          <View style={styles.hourlyCardContainer}>
-            <FlatList
-              data={hourlyData}
-              renderItem={renderItemHourly}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item}
-            />
+            <View style={styles.hourlyCardContainer}>
+              <FlatList
+                data={hourlyCardData}
+                renderItem={renderItemHourly}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={item => item?.dt}
+              />
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -88,12 +125,15 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-around',
     flex: 1,
-    backgroundColor: Colors.mainBackgroundColor,
+  },
+  fullScreenShadow: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
   },
   topHalfScreen: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: hp('2%'),
+    paddingHorizontal: hp('3%'),
   },
   bottomHalfScreen: {
     flex: 1,

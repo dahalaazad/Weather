@@ -1,3 +1,3 @@
-import weatherReducer from './weatherSlice';
+import weatherReducer, {getWeather} from './weatherSlice';
 
-export {weatherReducer};
+export {weatherReducer, getWeather};

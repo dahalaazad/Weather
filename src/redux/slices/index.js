@@ -1,3 +1,3 @@
-import {weatherReducer} from './weatherData';
+import {weatherReducer, getWeather} from './weatherData';
 
-export {weatherReducer};
+export {weatherReducer, getWeather};
