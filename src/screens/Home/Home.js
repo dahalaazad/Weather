@@ -17,22 +17,27 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import moment from 'moment';
 
-const cityCardData = [
-  {city: 'Kathmandu', temp: '30°C', background: Images.sunriseCardBackground},
-  {city: 'Gusingal', temp: '35°C', background: Images.rainyCardBackground},
-  {city: 'Mumbai', temp: '45°C', background: Images.sunriseCardBackground},
-  {city: 'Doha', temp: '49°C', background: Images.rainyCardBackground},
-];
-
 const Home = () => {
   const dispatch = useDispatch();
 
   const weather = useSelector(state => state?.weather || {});
+  console.log(weather);
+  const cityCardData =
+    [
+      {
+        city: 'Kathmandu',
+        temp: weather?.data?.current?.temp,
+        background: Images.sunriseCardBackground,
+      },
+      {city: 'London', temp: 35, background: Images.rainyCardBackground},
+      {city: 'Mumbai', temp: 45, background: Images.sunriseCardBackground},
+      {city: 'Doha', temp: 49, background: Images.rainyCardBackground},
+    ] || [];
 
   const hourlyCardData = weather?.data?.hourly?.slice(0, 12) || [];
 
   useEffect(() => {
-    dispatch(getWeather());
+    dispatch(getWeather('Patan'));
   }, []);
 
   const renderItemHourly = ({item}) => (
@@ -58,28 +63,36 @@ const Home = () => {
         <View style={styles.fullScreenShadow}>
           <View style={styles.topHalfScreen}>
             <View style={[styles.row, styles.spaceBetween]}>
-              <Text style={styles.textStyle}>{weather?.cityName} </Text>
+              <Text style={styles.textStyle}>{weather?.cityName || ''} </Text>
 
               <Text style={styles.textStyle}>
-                {`${Math.round(weather?.data?.current?.temp)}°C`}
+                {`${Math.round(weather?.data?.current?.temp)}°C` || ''}
               </Text>
             </View>
 
             <View style={[styles.row, styles.spaceBetween]}>
               <View style={[styles.row, styles.spaceAround]}>
                 <Text style={styles.smallTextStyle}>
-                  {moment.unix(weather?.data?.current.dt).format('D MMM YYYY')}
+                  {moment
+                    .unix(weather?.data?.current.dt)
+                    .format('D MMM YYYY') || ''}
 
                   {'   '}
 
                   {`${Math.round(
                     weather?.data?.daily[0]?.temp?.min,
-                  )}°C/${Math.round(weather?.data?.daily[0]?.temp?.max)}°C`}
+                  )}°C/${Math.round(weather?.data?.daily[0]?.temp?.max)}°C` ||
+                    ''}
                 </Text>
               </View>
 
               <Text style={styles.smallTextStyle}>
-                {weather?.data?.current?.weather[0]?.description}
+                {weather?.data?.current?.weather[0]?.description
+                  .charAt(0)
+                  .toUpperCase()
+                  .concat(
+                    weather?.data?.current?.weather[0]?.description?.slice(1),
+                  ) || ''}
               </Text>
             </View>
           </View>
