@@ -21,10 +21,13 @@ const Home = () => {
   const dispatch = useDispatch();
   const weather = useSelector(state => state?.weather || {});
 
+  const {cityName} = weather || {};
+  const {current, daily, hourly} = weather?.data || {};
+
   const cityCardData = [
     {
       city: 'Kathmandu',
-      temp: weather?.data?.current?.temp || 0,
+      temp: current?.temp || 0,
       background: Images.sunriseCardBackground,
     },
     {city: 'London', temp: 35, background: Images.rainyCardBackground},
@@ -32,7 +35,7 @@ const Home = () => {
     {city: 'Doha', temp: 49, background: Images.rainyCardBackground},
   ];
 
-  const hourlyCardData = weather?.data?.hourly?.slice(0, 12) || [];
+  const hourlyCardData = hourly?.slice(0, 12) || [];
 
   useEffect(() => {
     dispatch(getWeather('Patan'));
@@ -41,16 +44,16 @@ const Home = () => {
   const renderItemHourly = ({item}) => (
     <HourlyCard
       icon={item?.weather[0]?.icon || ''}
-      time={moment.unix(item?.dt).format('h:mm A')}
+      time={moment.unix(item?.dt || 0).format('h:mm A')}
     />
   );
 
   const renderItemCity = ({item}) => (
     <TouchableOpacity style={{paddingHorizontal: hp('3%')}}>
       <CityCard
-        cityName={item.city}
-        temp={item.temp}
-        imageBackground={item.background}
+        cityName={item?.city}
+        temp={item?.temp}
+        imageBackground={item?.background}
       />
     </TouchableOpacity>
   );
@@ -61,32 +64,29 @@ const Home = () => {
         <View style={styles.fullScreenShadow}>
           <View style={styles.topHalfScreen}>
             <View style={[styles.row, styles.spaceBetween]}>
-              <Text style={styles.textStyle}>{weather?.cityName || ''} </Text>
+              <Text style={styles.textStyle}>{cityName || ''} </Text>
 
               <Text style={styles.textStyle}>
-                {`${Math.round(weather?.data?.current?.temp)}°C` || ''}
+                {`${Math.round(current?.temp || 0)}°C`}
               </Text>
             </View>
 
             <View style={[styles.row, styles.spaceBetween]}>
               <View style={[styles.row, styles.spaceAround]}>
                 <Text style={styles.smallTextStyle}>
-                  {moment
-                    .unix(weather?.data?.current.dt)
-                    .format('D MMM YYYY') || ''}
+                  {moment.unix(current?.dt || 0).format('D MMM YYYY')}
 
                   {'   '}
 
-                  {`${Math.round(
-                    weather?.data?.daily[0]?.temp?.min,
-                  )}°C/${Math.round(weather?.data?.daily[0]?.temp?.max)}°C` ||
-                    ''}
+                  {`${Math.round(daily?.temp?.min || 0)}°C/${Math.round(
+                    daily?.temp?.max || 0,
+                  )}°C`}
                 </Text>
               </View>
 
               <Text style={styles.smallTextStyle}>
                 {capitalizeFirstLetterInWords(
-                  weather?.data?.current?.weather[0]?.description,
+                  current?.weather[0]?.description,
                 ) || ''}
               </Text>
             </View>
