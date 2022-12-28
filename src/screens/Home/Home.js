@@ -22,17 +22,16 @@ const Home = () => {
 
   const weather = useSelector(state => state?.weather || {});
   console.log(weather);
-  const cityCardData =
-    [
-      {
-        city: 'Kathmandu',
-        temp: weather?.data?.current?.temp || 0,
-        background: Images.sunriseCardBackground,
-      },
-      {city: 'London', temp: 35, background: Images.rainyCardBackground},
-      {city: 'Mumbai', temp: 45, background: Images.sunriseCardBackground},
-      {city: 'Doha', temp: 49, background: Images.rainyCardBackground},
-    ] || [];
+  const cityCardData = [
+    {
+      city: 'Kathmandu',
+      temp: weather?.data?.current?.temp || 0,
+      background: Images.sunriseCardBackground,
+    },
+    {city: 'London', temp: 35, background: Images.rainyCardBackground},
+    {city: 'Mumbai', temp: 45, background: Images.sunriseCardBackground},
+    {city: 'Doha', temp: 49, background: Images.rainyCardBackground},
+  ];
 
   const hourlyCardData = weather?.data?.hourly?.slice(0, 12) || [];
 
