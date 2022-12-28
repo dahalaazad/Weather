@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   topHalfScreen: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: hp('2%'),
+    paddingHorizontal: hp('3%'),
   },
   bottomHalfScreen: {
     flex: 1,
