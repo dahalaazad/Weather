@@ -42,7 +42,7 @@ const Home = () => {
 
   const renderItemHourly = ({item}) => (
     <HourlyCard
-      icon={item?.weather[0]?.icon}
+      icon={item?.weather[0]?.icon || ''}
       time={moment.unix(item?.dt).format('h:mm A')}
     />
   );
