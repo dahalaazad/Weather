@@ -26,7 +26,7 @@ const Home = () => {
     [
       {
         city: 'Kathmandu',
-        temp: weather?.data?.current?.temp,
+        temp: weather?.data?.current?.temp || 0,
         background: Images.sunriseCardBackground,
       },
       {city: 'London', temp: 35, background: Images.rainyCardBackground},

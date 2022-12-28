@@ -13,16 +13,16 @@ export const getWeather = createAsyncThunk(
     const cityNameResponse = await axios.get(
       `${baseURL}/forecast?q=${cityName}&units=metric&appid=${appId}`,
     );
-    const lat = cityNameResponse?.data?.city?.coord?.lat;
-    const long = cityNameResponse?.data?.city?.coord?.lon;
+    const lat = cityNameResponse?.data?.city?.coord?.lat || 0;
+    const long = cityNameResponse?.data?.city?.coord?.lon || 0;
 
     const latLongResponse = await axios.get(
       `${baseURL}/onecall?lat=${lat}&lon=${long}&units=metric&appid=${appId}`,
     );
 
     return {
-      cityName: cityNameResponse?.data?.city?.name,
-      data: latLongResponse?.data,
+      cityName: cityNameResponse?.data?.city?.name || 'Patan',
+      data: latLongResponse?.data || {},
     };
   },
 );
