@@ -19,9 +19,8 @@ import moment from 'moment';
 
 const Home = () => {
   const dispatch = useDispatch();
-
   const weather = useSelector(state => state?.weather || {});
-  console.log(weather);
+
   const cityCardData = [
     {
       city: 'Kathmandu',
