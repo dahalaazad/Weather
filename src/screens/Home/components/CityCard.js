@@ -14,7 +14,7 @@ const CityCard = ({cityName, temp, imageBackground}) => {
       imageStyle={{borderRadius: 20}}>
       <Text style={styles.textStyle}>{cityName}</Text>
 
-      <Text style={styles.textStyle}>{temp} </Text>
+      <Text style={styles.textStyle}>{`${Math.round(temp)}°C` || ''} </Text>
     </ImageBackground>
   );
 };
