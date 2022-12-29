@@ -66,7 +66,7 @@ const Home = () => {
             <View style={[styles.row, styles.spaceBetween]}>
               <Text style={styles.textStyle}>{cityName || ''} </Text>
 
-              <Text style={styles.textStyle}>
+              <Text style={[styles.textStyle, {fontSize: 38}]}>
                 {`${Math.round(current?.temp || 0)}°C`}
               </Text>
             </View>
