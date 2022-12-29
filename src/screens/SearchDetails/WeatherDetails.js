@@ -149,10 +149,10 @@ const styles = StyleSheet.create({
   },
   leftDataContainer: {
     flex: 1,
-    marginLeft: 25,
+    marginLeft: 15,
   },
   centerDataContainer: {
     flex: 1,
-    paddingHorizontal: 25,
+    paddingHorizontal: 20,
   },
 });
