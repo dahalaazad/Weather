@@ -26,7 +26,7 @@ const Home = ({navigation}) => {
 
   const weather = useSelector(state => state?.weather?.weatherData || {});
 
-  const {cityName} = weather || {};
+  const {cityName} = weather || 'Kathmandu';
   const {current, daily, hourly} = weather?.data || {};
 
   const minTemp =
@@ -47,8 +47,8 @@ const Home = ({navigation}) => {
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
 
-  const onPressCityHandler = cityName => {
-    navigation.navigate('Search', {cityName});
+  const onPressCityHandler = cityCardName => {
+    navigation.navigate('Search', {cityName: cityCardName});
   };
 
   const renderItemHourly = ({item}) => (
@@ -61,7 +61,7 @@ const Home = ({navigation}) => {
   const renderItemCity = ({item}) => (
     <TouchableOpacity
       style={{paddingHorizontal: hp('3%')}}
-      onPress={() => onPressCityHandler(item?.city || 'Patan')}>
+      onPress={() => onPressCityHandler(item?.city)}>
       <CityCard
         cityName={item?.city}
         temp={item?.temp}
