@@ -19,7 +19,7 @@ import moment from 'moment';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const weather = useSelector(state => state?.weather || {});
+  const weather = useSelector(state => state?.weather?.weatherData || {});
 
   const {cityName} = weather || {};
   const {current, daily, hourly} = weather?.data || {};

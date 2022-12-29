@@ -1,7 +1,11 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const initialState = {};
+const initialState = {
+  weatherData: {},
+  status: 'idle',
+  error: null,
+};
 
 export const getWeather = createAsyncThunk(
   'weather/getWeather',
@@ -30,10 +34,20 @@ export const weatherSlice = createSlice({
   name: 'weather',
   initialState,
   reducers: {},
-  extraReducers: {
-    [getWeather.fulfilled]: (state, action) => {
-      return action.payload;
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(getWeather.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(getWeather.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        // Add any fetched posts to the array
+        state.weatherData = action.payload;
+      })
+      .addCase(getWeather.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      });
   },
 });
 
