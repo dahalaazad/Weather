@@ -17,8 +17,13 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import moment from 'moment';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getWeather('Patan'));
+  }, []);
+
   const weather = useSelector(state => state?.weather?.weatherData || {});
 
   const {cityName} = weather || {};
@@ -37,9 +42,9 @@ const Home = () => {
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
 
-  useEffect(() => {
-    dispatch(getWeather('Patan'));
-  }, []);
+  const onPressCityHandler = () => {
+    navigation.navigate('Search');
+  };
 
   const renderItemHourly = ({item}) => (
     <HourlyCard
@@ -49,7 +54,9 @@ const Home = () => {
   );
 
   const renderItemCity = ({item}) => (
-    <TouchableOpacity style={{paddingHorizontal: hp('3%')}}>
+    <TouchableOpacity
+      style={{paddingHorizontal: hp('3%')}}
+      onPress={onPressCityHandler}>
       <CityCard
         cityName={item?.city}
         temp={item?.temp}
