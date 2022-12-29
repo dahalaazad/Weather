@@ -49,7 +49,7 @@ const Home = () => {
   );
 
   const renderItemCity = ({item}) => (
-    <TouchableOpacity style={{paddingHorizontal: hp('3%')}}>
+    <TouchableOpacity style={{paddingHorizontal: wp('4%')}}>
       <CityCard
         cityName={item?.city}
         temp={item?.temp}
@@ -93,7 +93,7 @@ const Home = () => {
           </View>
 
           <View style={styles.bottomHalfScreen}>
-            <View style={{alignItems: 'center'}}>
+            <View style={styles.cityCardContainer}>
               <FlatList
                 data={cityCardData}
                 renderItem={renderItemCity}
@@ -138,6 +138,10 @@ const styles = StyleSheet.create({
   bottomHalfScreen: {
     flex: 1,
     justifyContent: 'space-around',
+  },
+  cityCardContainer: {
+    alignItems: 'space-between',
+    paddingHorizontal: wp('2%'),
   },
   textStyle: {
     color: '#fff',
