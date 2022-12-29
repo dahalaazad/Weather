@@ -26,13 +26,13 @@ const WeatherDetails = ({route, navigation}) => {
         <View style={styles.topHalf}>
           <Search />
 
-          <Text style={styles.cityTitleText}>{cityName}</Text>
+          <Text style={styles.cityTitleText}>{cityName || ''}</Text>
         </View>
 
         <View style={styles.bottomHalf}>
           <View style={styles.weatherIconContainer}>
             <Text style={styles.bigText}>{`${Math.round(
-              current?.temp,
+              current?.temp || 0,
             )}°C`}</Text>
 
             <View style={{alignItems: 'center'}}>
@@ -52,16 +52,19 @@ const WeatherDetails = ({route, navigation}) => {
                 <View style={styles.leftDataContainer}>
                   <Details
                     title="Pressure"
-                    value={`${current?.pressure} hPa`}
+                    value={`${current?.pressure || 0} hPa`}
                   />
                 </View>
 
                 <View style={styles.centerDataContainer}>
-                  <Details title="Humidity" value={`${current?.humidity}`} />
+                  <Details
+                    title="Humidity"
+                    value={`${current?.humidity || 0}`}
+                  />
                 </View>
 
                 <View style={{flex: 1}}>
-                  <Details title="Wind Degree" value={current?.wind_deg} />
+                  <Details title="Wind Degree" value={current?.wind_deg || 0} />
                 </View>
               </View>
             </View>
@@ -69,20 +72,20 @@ const WeatherDetails = ({route, navigation}) => {
 
           <View style={styles.weatherDataContainer}>
             <View style={styles.leftDataContainer}>
-              <Details title="UVI" value={current?.uvi} />
+              <Details title="UVI" value={current?.uvi || 0} />
             </View>
 
             <View style={styles.centerDataContainer}>
               <Details
                 title="Wind Speed"
-                value={`${Math.round(current?.wind_speed)} km/h`}
+                value={`${Math.round(current?.wind_speed || 0)} km/h`}
               />
             </View>
 
             <View style={{flex: 1}}>
               <Details
                 title="Visibility"
-                value={`${Math.round(current?.visibility / 1000)} km`}
+                value={`${Math.round(current?.visibility / 1000 || 0)} km`}
               />
             </View>
           </View>
