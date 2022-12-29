@@ -24,6 +24,11 @@ const Home = () => {
   const {cityName} = weather || {};
   const {current, daily, hourly} = weather?.data || {};
 
+  const minTemp =
+    Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.min : 0;
+  const maxTemp =
+    Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
+
   const cityCardData = [
     {
       city: 'Kathmandu',
@@ -49,7 +54,7 @@ const Home = () => {
   );
 
   const renderItemCity = ({item}) => (
-    <TouchableOpacity style={{paddingHorizontal: hp('3%')}}>
+    <TouchableOpacity style={{paddingHorizontal: wp('4%')}}>
       <CityCard
         cityName={item?.city}
         temp={item?.temp}
@@ -66,20 +71,25 @@ const Home = () => {
             <View style={[styles.row, styles.spaceBetween]}>
               <Text style={styles.textStyle}>{cityName || ''} </Text>
 
-              <Text style={styles.textStyle}>
+              <Text style={[styles.textStyle, {fontSize: 38}]}>
                 {`${Math.round(current?.temp || 0)}°C`}
               </Text>
             </View>
 
-            <View style={[styles.row, styles.spaceBetween]}>
-              <View style={[styles.row, styles.spaceAround]}>
+            <View
+              style={[
+                styles.row,
+                styles.spaceBetween,
+                {alignItems: 'flex-end'},
+              ]}>
+              <View style={styles.spaceAround}>
                 <Text style={styles.smallTextStyle}>
                   {moment.unix(current?.dt || 0).format('D MMM YYYY')}
+                </Text>
 
-                  {'   '}
-
-                  {`${Math.round(daily?.temp?.min || 0)}°C/${Math.round(
-                    daily?.temp?.max || 0,
+                <Text style={styles.smallTextStyle}>
+                  {`${Math.round(minTemp || 0)}°C/${Math.round(
+                    maxTemp || 0,
                   )}°C`}
                 </Text>
               </View>
@@ -93,7 +103,7 @@ const Home = () => {
           </View>
 
           <View style={styles.bottomHalfScreen}>
-            <View style={{alignItems: 'center'}}>
+            <View style={styles.cityCardContainer}>
               <FlatList
                 data={cityCardData}
                 renderItem={renderItemCity}
@@ -139,6 +149,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
   },
+  cityCardContainer: {
+    alignItems: 'space-between',
+    paddingHorizontal: wp('2%'),
+  },
   textStyle: {
     color: '#fff',
     fontFamily: 'Poppins',
@@ -157,6 +171,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
+  center: {
+    justifyContent: 'center',
+  },
   spaceBetween: {
     justifyContent: 'space-between',
   },
@@ -165,6 +182,9 @@ const styles = StyleSheet.create({
   },
   spaceEvenly: {
     justifyContent: 'space-evenly',
+  },
+  flexEnd: {
+    justifyContent: 'flex-end',
   },
   hourlyCardContainer: {
     flexDirection: 'row',
