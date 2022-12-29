@@ -48,7 +48,7 @@ const Home = ({navigation}) => {
   const hourlyCardData = hourly?.slice(0, 12) || [];
 
   const onPressCityHandler = cityName => {
-    navigation.navigate('Search', {cityName: cityName});
+    navigation.navigate('Search', {cityName});
   };
 
   const renderItemHourly = ({item}) => (
