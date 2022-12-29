@@ -23,7 +23,11 @@ const Home = () => {
 
   const {cityName} = weather || {};
   const {current, daily, hourly} = weather?.data || {};
-  const todayWeather = Array.isArray(daily) ? daily[0] : [];
+
+  const minTemp =
+    Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.min : 0;
+  const maxTemp =
+    Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
 
   const cityCardData = [
     {
@@ -84,8 +88,8 @@ const Home = () => {
                 </Text>
 
                 <Text style={styles.smallTextStyle}>
-                  {`${Math.round(todayWeather?.temp?.min || 0)}°C/${Math.round(
-                    todayWeather?.temp?.max || 0,
+                  {`${Math.round(minTemp || 0)}°C/${Math.round(
+                    maxTemp || 0,
                   )}°C`}
                 </Text>
               </View>
