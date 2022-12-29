@@ -71,15 +71,20 @@ const Home = () => {
               </Text>
             </View>
 
-            <View style={[styles.row, styles.spaceBetween]}>
-              <View style={[styles.row, styles.spaceAround]}>
+            <View
+              style={[
+                styles.row,
+                styles.spaceBetween,
+                {alignItems: 'flex-end'},
+              ]}>
+              <View style={styles.spaceAround}>
                 <Text style={styles.smallTextStyle}>
                   {moment.unix(current?.dt || 0).format('D MMM YYYY')}
+                </Text>
 
-                  {'   '}
-
-                  {`${Math.round(daily?.temp?.min || 0)}°C/${Math.round(
-                    daily?.temp?.max || 0,
+                <Text style={styles.smallTextStyle}>
+                  {`${Math.round(daily[0]?.temp?.min || 0)}°C/${Math.round(
+                    daily[0]?.temp?.max || 0,
                   )}°C`}
                 </Text>
               </View>
@@ -161,6 +166,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
+  center: {
+    justifyContent: 'center',
+  },
   spaceBetween: {
     justifyContent: 'space-between',
   },
@@ -169,6 +177,9 @@ const styles = StyleSheet.create({
   },
   spaceEvenly: {
     justifyContent: 'space-evenly',
+  },
+  flexEnd: {
+    justifyContent: 'flex-end',
   },
   hourlyCardContainer: {
     flexDirection: 'row',
