@@ -42,8 +42,8 @@ const Home = ({navigation}) => {
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
 
-  const onPressCityHandler = () => {
-    navigation.navigate('Search');
+  const onPressCityHandler = cityName => {
+    navigation.navigate('Search', {cityName: cityName});
   };
 
   const renderItemHourly = ({item}) => (
@@ -56,7 +56,7 @@ const Home = ({navigation}) => {
   const renderItemCity = ({item}) => (
     <TouchableOpacity
       style={{paddingHorizontal: hp('3%')}}
-      onPress={onPressCityHandler}>
+      onPress={() => onPressCityHandler(item?.city || 'Patan')}>
       <CityCard
         cityName={item?.city}
         temp={item?.temp}
