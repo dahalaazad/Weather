@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     fontSize: 44,
     fontWeight: '800',
-    paddingBottom: 40,
-    color: Colors.blackColor,
+    paddingBottom: 90,
+    color: Colors.whiteColor,
   },
   bottomHalf: {
     flex: 1,
@@ -140,22 +140,26 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     fontSize: 72,
     fontWeight: '700',
-    paddingLeft: 25,
+    color: Colors.whiteColor,
+    paddingLeft: 10,
   },
   weatherCategoryText: {
     fontFamily: 'Poppins',
     fontSize: 12,
     fontWeight: '400',
+    color: Colors.whiteColor,
   },
   weatherDataText: {
     fontFamily: 'Poppins',
     fontSize: 24,
     fontWeight: '400',
+    color: Colors.whiteColor,
   },
   weatherOutlookText: {
     fontFamily: 'Poppins',
     fontSize: 24,
     fontWeight: '600',
+    color: Colors.whiteColor,
   },
   weatherDataContainer: {
     flexDirection: 'row',
