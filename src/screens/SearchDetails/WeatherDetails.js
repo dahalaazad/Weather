@@ -8,7 +8,7 @@ import {getWeather} from '@app/redux/slices';
 
 const WeatherDetails = ({route, navigation}) => {
   const dispatch = useDispatch();
-  const {cityName} = route.params;
+  const {cityName} = route.params || 'Kathmandu';
 
   useEffect(() => {
     dispatch(getWeather(cityName));

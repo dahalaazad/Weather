@@ -26,7 +26,7 @@ const Home = ({navigation}) => {
 
   const weather = useSelector(state => state?.weather?.weatherData || {});
 
-  const {cityName} = weather || 'Kathmandu';
+  const {cityName} = weather || {};
   const {current, daily, hourly} = weather?.data || {};
 
   const minTemp =
@@ -76,7 +76,7 @@ const Home = ({navigation}) => {
         <View style={styles.fullScreenShadow}>
           <View style={styles.topHalfScreen}>
             <View style={[styles.row, styles.spaceBetween]}>
-              <Text style={styles.textStyle}>{cityName || ''} </Text>
+              <Text style={styles.textStyle}>{cityName || 'Kathmandu'} </Text>
 
               <Text style={[styles.textStyle, {fontSize: 38}]}>
                 {`${Math.round(current?.temp || 0)}°C`}
