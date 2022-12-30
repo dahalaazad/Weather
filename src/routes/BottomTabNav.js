@@ -1,8 +1,10 @@
 import React from 'react';
+import {View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Home, WeatherDetails} from '@app/screens';
 import {Colors} from '@app/constants';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,11 +37,18 @@ const BottomTabNav = () => {
 
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors.bottomTabBackgroundColor,
+          // backgroundColor: Colors.bottomTabBackgroundColor,
           paddingTop: 5,
           height: 55,
         },
-
+        tabBarBackground: () => (
+          <LinearGradient
+            useAngle={true}
+            // angle={180}
+            colors={['#005aa7', '#8f94fb', '#a8c0ff']}
+            style={{flex: 1, height: 2}}
+          />
+        ),
         tabBarActiveTintColor: Colors.whiteColor,
         tabBarInactiveTintColor: Colors.bottomTabInactiveColor,
 

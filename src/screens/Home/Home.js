@@ -17,9 +17,14 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import moment from 'moment';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const dispatch = useDispatch();
-  const weather = useSelector(state => state?.weather || {});
+
+  useEffect(() => {
+    dispatch(getWeather('Patan'));
+  }, []);
+
+  const weather = useSelector(state => state?.weather?.weatherData || {});
 
   const {cityName} = weather || {};
   const {current, daily, hourly} = weather?.data || {};
@@ -42,9 +47,9 @@ const Home = () => {
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
 
-  useEffect(() => {
-    dispatch(getWeather('Patan'));
-  }, []);
+  const onPressCityHandler = cityCardName => {
+    navigation.navigate('Search', {cityName: cityCardName});
+  };
 
   const renderItemHourly = ({item}) => (
     <HourlyCard
@@ -54,7 +59,9 @@ const Home = () => {
   );
 
   const renderItemCity = ({item}) => (
-    <TouchableOpacity style={{paddingHorizontal: wp('4%')}}>
+    <TouchableOpacity
+      style={{paddingHorizontal: hp('3%')}}
+      onPress={() => onPressCityHandler(item?.city)}>
       <CityCard
         cityName={item?.city}
         temp={item?.temp}
@@ -69,7 +76,7 @@ const Home = () => {
         <View style={styles.fullScreenShadow}>
           <View style={styles.topHalfScreen}>
             <View style={[styles.row, styles.spaceBetween]}>
-              <Text style={styles.textStyle}>{cityName || ''} </Text>
+              <Text style={styles.textStyle}>{cityName || 'Kathmandu'} </Text>
 
               <Text style={[styles.textStyle, {fontSize: 38}]}>
                 {`${Math.round(current?.temp || 0)}°C`}
