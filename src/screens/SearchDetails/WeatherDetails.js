@@ -1,8 +1,11 @@
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import {capitalizeFirstLetterInWords, Colors, Images} from '@app/constants';
 import {Details, Search} from './components';
-import {SunIcon} from '@app/assets/svg';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {useDispatch, useSelector} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 
@@ -22,7 +25,7 @@ const WeatherDetails = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={Images.searchDetailBackground} style={{flex: 1}}>
+      <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
         <View style={styles.topHalf}>
           <Search />
 
@@ -36,7 +39,14 @@ const WeatherDetails = ({route, navigation}) => {
             )}°C`}</Text>
 
             <View style={{alignItems: 'center'}}>
-              <SunIcon />
+              <View>
+                <Image
+                  style={styles.weatherIconLogo}
+                  source={{
+                    uri: `https://openweathermap.org/img/wn/${current?.weather[0]?.icon}@4x.png`,
+                  }}
+                />
+              </View>
 
               <Text style={styles.weatherOutlookText}>
                 {capitalizeFirstLetterInWords(
@@ -109,15 +119,16 @@ const styles = StyleSheet.create({
   cityTitleText: {
     textAlign: 'center',
     fontFamily: 'Poppins',
-    fontSize: 24,
+    fontSize: 44,
     fontWeight: '800',
     paddingBottom: 40,
+    color: Colors.blackColor,
   },
   bottomHalf: {
     flex: 1,
     justifyContent: 'space-evenly',
     paddingHorizontal: 25,
-    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+    backgroundColor: 'rgba(52, 52, 52, 0.5)',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
@@ -157,5 +168,9 @@ const styles = StyleSheet.create({
   centerDataContainer: {
     flex: 1,
     paddingHorizontal: 20,
+  },
+  weatherIconLogo: {
+    width: wp('45%'),
+    height: hp('15%'),
   },
 });
