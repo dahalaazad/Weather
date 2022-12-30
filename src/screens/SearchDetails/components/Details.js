@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
   weatherCategoryText: {
     fontFamily: 'Poppins',
     fontSize: 12,
-    fontWeight: '400',
+    fontWeight: '700',
   },
   weatherDataText: {
     fontFamily: 'Poppins',
     fontSize: 24,
-    fontWeight: '400',
+    fontWeight: '700',
   },
 });
