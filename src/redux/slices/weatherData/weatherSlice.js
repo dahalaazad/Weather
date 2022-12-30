@@ -11,7 +11,7 @@ export const getWeather = createAsyncThunk(
   'weather/getWeather',
   async cityName => {
     const baseURL = 'https://api.openweathermap.org/data/2.5';
-    const appId = 'b31f986179635820b5d31e28a4cf9fc2';
+    const appId = '8ec56ea21eb8c16a1b68e052c8f559d7';
 
     const cityNameResponse = await axios.get(
       `${baseURL}/forecast?q=${cityName}&units=metric&appid=${appId}`,
