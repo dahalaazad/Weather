@@ -1,4 +1,12 @@
-import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {capitalizeFirstLetterInWords, Colors, Images} from '@app/constants';
 import {Details, Search} from './components';
@@ -8,6 +16,7 @@ import {
 } from 'react-native-responsive-screen';
 import {useDispatch, useSelector} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
+import {CityCard} from './components';
 
 const WeatherDetails = ({route, navigation}) => {
   const dispatch = useDispatch();
@@ -23,13 +32,41 @@ const WeatherDetails = ({route, navigation}) => {
 
   const {current, daily, hourly} = cityWeatherDetails?.data || {};
 
+  const cityCardData = [
+    {
+      city: 'Kathmandu',
+      temp: current?.temp || 0,
+      background: Images.sunriseCardBackground,
+    },
+    {city: 'London', temp: 35, background: Images.rainyCardBackground},
+    {city: 'Mumbai', temp: 45, background: Images.sunriseCardBackground},
+    {city: 'Doha', temp: 49, background: Images.rainyCardBackground},
+  ];
+
+  const renderItemCity = ({item}) => (
+    <TouchableOpacity style={{paddingHorizontal: hp('3%')}} onPress={() => {}}>
+      <CityCard
+        cityName={item?.city}
+        temp={item?.temp}
+        imageBackground={item?.background}
+      />
+    </TouchableOpacity>
+  );
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
         <View style={styles.topHalf}>
           <Search />
 
-          <Text style={styles.cityTitleText}>{cityName || ''}</Text>
+          <View style={styles.cityCardContainer}>
+            <FlatList
+              data={cityCardData}
+              renderItem={renderItemCity}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={item => item.city}
+            />
+          </View>
         </View>
 
         <View style={styles.bottomHalf}>
@@ -114,7 +151,12 @@ const styles = StyleSheet.create({
   },
   topHalf: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    // alignItems: 'center',
+  },
+  cityCardContainer: {
+    alignItems: 'space-between',
+    paddingHorizontal: wp('2%'),
   },
   cityTitleText: {
     textAlign: 'center',

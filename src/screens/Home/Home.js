@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {Colors, Images, capitalizeFirstLetterInWords} from '@app/constants';
-import {CityCard, HourlyCard} from './components';
+import {HourlyCard} from './components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -34,17 +34,6 @@ const Home = ({navigation}) => {
   const maxTemp =
     Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
 
-  const cityCardData = [
-    {
-      city: 'Kathmandu',
-      temp: current?.temp || 0,
-      background: Images.sunriseCardBackground,
-    },
-    {city: 'London', temp: 35, background: Images.rainyCardBackground},
-    {city: 'Mumbai', temp: 45, background: Images.sunriseCardBackground},
-    {city: 'Doha', temp: 49, background: Images.rainyCardBackground},
-  ];
-
   const hourlyCardData = hourly?.slice(0, 12) || [];
 
   const onPressCityHandler = cityCardName => {
@@ -56,18 +45,6 @@ const Home = ({navigation}) => {
       icon={item?.weather[0]?.icon || ''}
       time={moment.unix(item?.dt || 0).format('h:mm A')}
     />
-  );
-
-  const renderItemCity = ({item}) => (
-    <TouchableOpacity
-      style={{paddingHorizontal: hp('3%')}}
-      onPress={() => onPressCityHandler(item?.city)}>
-      <CityCard
-        cityName={item?.city}
-        temp={item?.temp}
-        imageBackground={item?.background}
-      />
-    </TouchableOpacity>
   );
 
   return (
@@ -110,16 +87,6 @@ const Home = ({navigation}) => {
           </View>
 
           <View style={styles.bottomHalfScreen}>
-            <View style={styles.cityCardContainer}>
-              <FlatList
-                data={cityCardData}
-                renderItem={renderItemCity}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={item => item.city}
-              />
-            </View>
-
             <View style={styles.hourlyCardContainer}>
               <FlatList
                 data={hourlyCardData}
