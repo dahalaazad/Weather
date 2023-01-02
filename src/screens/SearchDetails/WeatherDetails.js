@@ -1,12 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {capitalizeFirstLetterInWords, Colors, Images} from '@app/constants';
 import {Details, Search} from './components';

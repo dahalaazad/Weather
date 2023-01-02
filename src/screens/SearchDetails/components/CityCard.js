@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {Colors, Images} from '@app/constants';
 import {
   widthPercentageToDP as wp,
