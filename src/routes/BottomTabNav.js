@@ -45,7 +45,7 @@ const BottomTabNav = () => {
           <LinearGradient
             useAngle={true}
             // angle={180}
-            colors={['#005aa7', '#8f94fb', '#a8c0ff']}
+            colors={['#667db6', '#0082c8', '#0082c8', '#667db6']}
             style={{flex: 1, height: 2}}
           />
         ),
