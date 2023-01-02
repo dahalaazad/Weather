@@ -6,7 +6,7 @@ import {
   ImageBackground,
   FlatList,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Colors, Images, capitalizeFirstLetterInWords} from '@app/constants';
 import {HourlyCard} from './components';
 import {
@@ -16,17 +16,22 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import moment from 'moment';
+import {useFocusEffect} from '@react-navigation/native';
 
-const Home = ({navigation}) => {
+const Home = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getWeather('Patan'));
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getWeather(cityName));
+    }, [dispatch, getWeather, cityName]),
+  );
 
   const weather = useSelector(state => state?.weather?.weatherData || {});
 
   const {cityName} = weather || {};
+  const currentCity = cityName;
+  console.log(currentCity);
   const {current, daily, hourly} = weather?.data || {};
 
   const minTemp =
@@ -35,10 +40,6 @@ const Home = ({navigation}) => {
     Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
-
-  const onPressCityHandler = cityCardName => {
-    navigation.navigate('Search', {cityName: cityCardName});
-  };
 
   const renderItemHourly = ({item}) => (
     <HourlyCard
