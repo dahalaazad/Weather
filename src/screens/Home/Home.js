@@ -6,7 +6,7 @@ import {
   ImageBackground,
   FlatList,
 } from 'react-native';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {Colors, Images, capitalizeFirstLetterInWords} from '@app/constants';
 import {HourlyCard} from './components';
 import {
@@ -23,7 +23,7 @@ const Home = () => {
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(getWeather(cityName));
+      dispatch(getWeather('Patan'));
     }, [dispatch, getWeather, cityName]),
   );
 
