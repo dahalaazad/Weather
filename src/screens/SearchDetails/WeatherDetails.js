@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {capitalizeFirstLetterInWords, Colors, Images} from '@app/constants';
 import {Details, Search} from './components';
 import {
@@ -18,9 +18,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import {CityCard} from './components';
 
-const WeatherDetails = ({route, navigation}) => {
+const WeatherDetails = () => {
   const dispatch = useDispatch();
-  const {cityName} = route.params || 'Kathmandu';
+  const [cityName, setCityName] = useState('Patan');
 
   useEffect(() => {
     dispatch(getWeather(cityName));
@@ -32,41 +32,13 @@ const WeatherDetails = ({route, navigation}) => {
 
   const {current, daily, hourly} = cityWeatherDetails?.data || {};
 
-  const cityCardData = [
-    {
-      city: 'Kathmandu',
-      temp: current?.temp || 0,
-      background: Images.sunriseCardBackground,
-    },
-    {city: 'London', temp: 35, background: Images.rainyCardBackground},
-    {city: 'Mumbai', temp: 45, background: Images.sunriseCardBackground},
-    {city: 'Doha', temp: 49, background: Images.rainyCardBackground},
-  ];
-
-  const renderItemCity = ({item}) => (
-    <TouchableOpacity style={{paddingHorizontal: hp('3%')}} onPress={() => {}}>
-      <CityCard
-        cityName={item?.city}
-        temp={item?.temp}
-        imageBackground={item?.background}
-      />
-    </TouchableOpacity>
-  );
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
         <View style={styles.topHalf}>
           <Search />
 
-          <View style={styles.cityCardContainer}>
-            <FlatList
-              data={cityCardData}
-              renderItem={renderItemCity}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item => item.city}
-            />
-          </View>
+          <CityCard cityName={cityName} setCityName={setCityName} />
         </View>
 
         <View style={styles.bottomHalf}>
