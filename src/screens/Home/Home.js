@@ -21,12 +21,6 @@ import {useFocusEffect} from '@react-navigation/native';
 const Home = () => {
   const dispatch = useDispatch();
 
-  useFocusEffect(
-    useCallback(() => {
-      dispatch(getWeather('Patan'));
-    }, [dispatch, getWeather, cityName]),
-  );
-
   const weather = useSelector(state => state?.weather?.weatherData || {});
 
   const {cityName} = weather || {};
@@ -40,6 +34,12 @@ const Home = () => {
     Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getWeather('Patan'));
+    }, [dispatch, getWeather, cityName]),
+  );
 
   const renderItemHourly = ({item}) => (
     <HourlyCard
