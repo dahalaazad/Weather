@@ -6,9 +6,9 @@ import {
   ImageBackground,
   FlatList,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {Colors, Images, capitalizeFirstLetterInWords} from '@app/constants';
-import {CityCard, HourlyCard} from './components';
+import {HourlyCard} from './components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -16,17 +16,15 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import moment from 'moment';
+import {useFocusEffect} from '@react-navigation/native';
 
-const Home = ({navigation}) => {
+const Home = () => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getWeather('Patan'));
-  }, []);
 
   const weather = useSelector(state => state?.weather?.weatherData || {});
 
   const {cityName} = weather || {};
+  const currentCity = cityName;
   const {current, daily, hourly} = weather?.data || {};
 
   const minTemp =
@@ -34,40 +32,19 @@ const Home = ({navigation}) => {
   const maxTemp =
     Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
 
-  const cityCardData = [
-    {
-      city: 'Kathmandu',
-      temp: current?.temp || 0,
-      background: Images.sunriseCardBackground,
-    },
-    {city: 'London', temp: 35, background: Images.rainyCardBackground},
-    {city: 'Mumbai', temp: 45, background: Images.sunriseCardBackground},
-    {city: 'Doha', temp: 49, background: Images.rainyCardBackground},
-  ];
-
   const hourlyCardData = hourly?.slice(0, 12) || [];
 
-  const onPressCityHandler = cityCardName => {
-    navigation.navigate('Search', {cityName: cityCardName});
-  };
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getWeather('Patan'));
+    }, [dispatch, getWeather, cityName]),
+  );
 
   const renderItemHourly = ({item}) => (
     <HourlyCard
       icon={item?.weather[0]?.icon || ''}
       time={moment.unix(item?.dt || 0).format('h:mm A')}
     />
-  );
-
-  const renderItemCity = ({item}) => (
-    <TouchableOpacity
-      style={{paddingHorizontal: hp('3%')}}
-      onPress={() => onPressCityHandler(item?.city)}>
-      <CityCard
-        cityName={item?.city}
-        temp={item?.temp}
-        imageBackground={item?.background}
-      />
-    </TouchableOpacity>
   );
 
   return (
@@ -110,16 +87,6 @@ const Home = ({navigation}) => {
           </View>
 
           <View style={styles.bottomHalfScreen}>
-            <View style={styles.cityCardContainer}>
-              <FlatList
-                data={cityCardData}
-                renderItem={renderItemCity}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={item => item.city}
-              />
-            </View>
-
             <View style={styles.hourlyCardContainer}>
               <FlatList
                 data={hourlyCardData}

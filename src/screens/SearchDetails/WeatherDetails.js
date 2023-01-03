@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {capitalizeFirstLetterInWords, Colors, Images} from '@app/constants';
 import {Details, Search} from './components';
 import {
@@ -8,10 +8,11 @@ import {
 } from 'react-native-responsive-screen';
 import {useDispatch, useSelector} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
+import {CityCard} from './components';
 
-const WeatherDetails = ({route, navigation}) => {
+const WeatherDetails = () => {
   const dispatch = useDispatch();
-  const {cityName} = route.params || 'Kathmandu';
+  const [cityName, setCityName] = useState('Patan');
 
   useEffect(() => {
     dispatch(getWeather(cityName));
@@ -29,7 +30,7 @@ const WeatherDetails = ({route, navigation}) => {
         <View style={styles.topHalf}>
           <Search />
 
-          <Text style={styles.cityTitleText}>{cityName || ''}</Text>
+          <CityCard cityName={cityName} setCityName={setCityName} />
         </View>
 
         <View style={styles.bottomHalf}>
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
   },
   topHalf: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   cityTitleText: {
     textAlign: 'center',
@@ -142,6 +143,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: Colors.whiteColor,
     paddingLeft: 10,
+    alignSelf: 'center',
   },
   weatherCategoryText: {
     fontFamily: 'Poppins',
