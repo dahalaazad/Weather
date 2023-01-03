@@ -47,7 +47,7 @@ const CityCard = ({cityName, setCityName}) => {
       <FlatList
         data={cityCardData}
         renderItem={renderItemCity}
-        horizontal={true}
+        horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={item => item?.city}
       />
