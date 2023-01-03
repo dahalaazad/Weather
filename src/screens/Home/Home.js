@@ -25,7 +25,6 @@ const Home = () => {
 
   const {cityName} = weather || {};
   const currentCity = cityName;
-  console.log(currentCity);
   const {current, daily, hourly} = weather?.data || {};
 
   const minTemp =
