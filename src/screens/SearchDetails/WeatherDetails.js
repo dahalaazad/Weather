@@ -9,6 +9,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import {CityCard} from './components';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const WeatherDetails = () => {
   const dispatch = useDispatch();
