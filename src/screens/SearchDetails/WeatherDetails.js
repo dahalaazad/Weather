@@ -116,11 +116,6 @@ const styles = StyleSheet.create({
   topHalf: {
     flex: 1,
     justifyContent: 'space-around',
-    // alignItems: 'center',
-  },
-  cityCardContainer: {
-    alignItems: 'space-between',
-    paddingHorizontal: wp('2%'),
   },
   cityTitleText: {
     textAlign: 'center',

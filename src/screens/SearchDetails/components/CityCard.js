@@ -26,20 +26,22 @@ const CityCard = ({cityName, setCityName}) => {
   };
 
   const renderItemCity = ({item}) => (
-    <TouchableOpacity
-      style={
-        item?.city === cityName
-          ? [styles.container, styles.selectedListItem]
-          : styles.container
-      }
-      onPress={() => onPressAction(item?.city)}>
-      <ImageBackground
-        source={item?.background}
-        style={styles.backgroundContainer}
-        imageStyle={{borderRadius: 20}}>
-        <Text style={styles.textStyle}>{item?.city}</Text>
-      </ImageBackground>
-    </TouchableOpacity>
+    <View style={styles.cityCardBorderContainer}>
+      <TouchableOpacity
+        style={
+          item?.city === cityName
+            ? [styles.container, styles.selectedListItem]
+            : styles.container
+        }
+        onPress={() => onPressAction(item?.city)}>
+        <ImageBackground
+          source={item?.background}
+          style={styles.backgroundContainer}
+          imageStyle={{borderRadius: 20}}>
+          <Text style={styles.textStyle}>{item?.city}</Text>
+        </ImageBackground>
+      </TouchableOpacity>
+    </View>
   );
 
   return (
@@ -58,8 +60,17 @@ const CityCard = ({cityName, setCityName}) => {
 export default CityCard;
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: hp('3%'),
+  container: {},
+  cityCardBorderContainer: {
+    height: hp('26.3%'),
+    width: wp('41%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: wp('4.5%'),
+  },
+  cityCardContainer: {
+    alignItems: 'center',
+    paddingBottom: wp('2.5%'),
   },
   backgroundContainer: {
     flexDirection: 'row',
@@ -67,7 +78,7 @@ const styles = StyleSheet.create({
     width: wp('40%'),
     justifyContent: 'space-evenly',
     paddingTop: 20,
-    borderRadius: 10,
+    borderRadius: 0,
   },
   textStyle: {
     fontSize: 24,
@@ -75,8 +86,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   selectedListItem: {
-    padding: hp('1.5%'),
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    borderWidth: 5,
+    borderColor: 'rgba(0,0,0,0.4)',
     borderRadius: 25,
   },
 });
