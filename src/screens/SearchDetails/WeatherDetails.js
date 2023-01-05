@@ -9,11 +9,12 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import {CityCard} from './components';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const WeatherDetails = () => {
   const dispatch = useDispatch();
   const [cityName, setCityName] = useState('Patan');
+  const [citySearchText, setCitySearchText] = useState('');
 
   useEffect(() => {
     dispatch(getWeather(cityName));
@@ -29,7 +30,7 @@ const WeatherDetails = () => {
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
         <View style={styles.topHalf}>
-          <Search />
+          <Search cityName={cityName} setCityName={setCityName} />
 
           <CityCard cityName={cityName} setCityName={setCityName} />
         </View>
