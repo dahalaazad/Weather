@@ -7,20 +7,13 @@ import {
   FlatList,
 } from 'react-native';
 import React from 'react';
-import {Colors, Images} from '@app/constants';
+import {Colors, CityListData} from '@app/constants';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
 const CityCard = ({cityName, setCityName}) => {
-  const cityCardData = [
-    {city: 'Kathmandu', background: Images.sunriseCardBackground},
-    {city: 'London', background: Images.rainyCardBackground},
-    {city: 'Mumbai', background: Images.sunriseCardBackground},
-    {city: 'Doha', background: Images.rainyCardBackground},
-  ];
-
   const onPressAction = currentCity => {
     setCityName(currentCity);
   };
@@ -47,7 +40,7 @@ const CityCard = ({cityName, setCityName}) => {
   return (
     <View style={styles.cityCardContainer}>
       <FlatList
-        data={cityCardData}
+        data={CityListData}
         renderItem={renderItemCity}
         horizontal
         showsHorizontalScrollIndicator={false}
