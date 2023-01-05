@@ -1,7 +1,12 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
-import {Colors, Images, CityListData} from '@app/constants';
+import {
+  Colors,
+  Images,
+  CityListData,
+  capitalizeFirstLetterInWords,
+} from '@app/constants';
 import {useSelector} from 'react-redux';
 
 const Search = ({cityName, setCityName}) => {
@@ -9,12 +14,12 @@ const Search = ({cityName, setCityName}) => {
   const [inputTextValue, setInputTextValue] = useState('');
   const submitCityName = text => {
     setCityName(text);
-    isError === null
-      ? CityListData.unshift({
+    isError !== null
+      ? alert(capitalizeFirstLetterInWords(isError?.message))
+      : CityListData.unshift({
           city: text,
           background: Images.sunriseCardBackground,
-        })
-      : alert(isError?.message);
+        });
     setInputTextValue('');
   };
   return (
