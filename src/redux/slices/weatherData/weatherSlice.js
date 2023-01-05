@@ -2,6 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
+  defaultWeatherData: {},
   weatherData: {},
   status: false,
   error: null,
@@ -9,24 +10,31 @@ const initialState = {
 
 export const getWeather = createAsyncThunk(
   'weather/getWeather',
-  async cityName => {
-    const baseURL = 'https://api.openweathermap.org/data/2.5';
-    const appId = '8ec56ea21eb8c16a1b68e052c8f559d7';
+  async (cityName, {rejectWithValue}) => {
+    try {
+      const baseURL = 'https://api.openweathermap.org/data/2.5';
+      const appId = '8ec56ea21eb8c16a1b68e052c8f559d7';
 
-    const cityNameResponse = await axios.get(
-      `${baseURL}/forecast?q=${cityName}&units=metric&appid=${appId}`,
-    );
-    const lat = cityNameResponse?.data?.city?.coord?.lat || 0;
-    const long = cityNameResponse?.data?.city?.coord?.lon || 0;
+      const cityNameResponse = await axios.get(
+        `${baseURL}/forecast?q=${cityName}&units=metric&appid=${appId}`,
+      );
+      const lat = cityNameResponse?.data?.city?.coord?.lat || 0;
+      const long = cityNameResponse?.data?.city?.coord?.lon || 0;
 
-    const latLongResponse = await axios.get(
-      `${baseURL}/onecall?lat=${lat}&lon=${long}&units=metric&appid=${appId}`,
-    );
+      const latLongResponse = await axios.get(
+        `${baseURL}/onecall?lat=${lat}&lon=${long}&units=metric&appid=${appId}`,
+      );
 
-    return {
-      cityName: cityNameResponse?.data?.city?.name || 'Patan',
-      data: latLongResponse?.data || {},
-    };
+      return {
+        cityName: cityNameResponse?.data?.city?.name || 'Patan',
+        data: latLongResponse?.data || {},
+      };
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
   },
 );
 
