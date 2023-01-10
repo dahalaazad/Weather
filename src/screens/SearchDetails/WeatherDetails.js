@@ -7,38 +7,68 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useDispatch, useSelector} from 'react-redux';
-import {getWeather} from '@app/redux/slices';
 import {CityCard} from './components';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {
+  getCurrentWeather,
+  setCurrentCity,
+  setCurrentCityData,
+} from '@app/redux/slices/weatherData/weatherSlice';
 
 const WeatherDetails = () => {
   const dispatch = useDispatch();
-  const [cityName, setCityName] = useState('Patan');
-  const [citySearchText, setCitySearchText] = useState('');
 
-  useEffect(() => {
-    dispatch(getWeather(cityName));
-  }, [cityName]);
+  const [cityName, setCityName] = useState('Patan');
+  const [citySearchText, setCitySearchText] = useState('Patan');
 
   const cityWeatherDetails = useSelector(
-    state => state?.weather?.weatherData || {},
+    state => state?.weather?.currentWeatherData || {},
   );
+  const CityListData = useSelector(state => state?.weather?.defaultCities);
 
-  const {current, daily, hourly} = cityWeatherDetails?.data || {};
+  useEffect(() => {
+    dispatch(getCurrentWeather(cityName));
+  }, []);
+
+  let current = cityWeatherDetails?.data || {};
+  const icon = Array.isArray(current?.weather) ? current?.weather[0].icon : '';
+  const description = Array.isArray(current?.weather)
+    ? current?.weather[0].description
+    : '';
+
+  const submitCityName = text => {
+    dispatch(getCurrentWeather(text));
+    text !== '' ? setCityName(text) : alert('City cannot be empty');
+  };
+
+  const handleCityPress = city => {
+    setCityName(city);
+
+    current = CityListData.filter(i => i.city === city)[0]?.data;
+    dispatch(setCurrentCityData({cityName: current?.name, data: current}));
+    console.log(current);
+  };
 
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
         <View style={styles.topHalf}>
-          <Search cityName={cityName} setCityName={setCityName} />
+          <Search
+            cityName={cityName}
+            setCityName={setCityName}
+            submitCityName={submitCityName}
+          />
 
-          <CityCard cityName={cityName} setCityName={setCityName} />
+          <CityCard
+            cityName={cityName}
+            CityListData={CityListData}
+            onCityCardPress={handleCityPress}
+          />
         </View>
 
         <View style={styles.bottomHalf}>
           <View style={styles.weatherIconContainer}>
             <Text style={styles.bigText}>{`${Math.round(
-              current?.temp || 0,
+              current?.main?.temp || 0,
             )}°C`}</Text>
 
             <View style={{alignItems: 'center'}}>
@@ -46,15 +76,16 @@ const WeatherDetails = () => {
                 <Image
                   style={styles.weatherIconLogo}
                   source={{
-                    uri: `https://openweathermap.org/img/wn/${current?.weather[0]?.icon}@4x.png`,
+                    uri:
+                      `https://openweathermap.org/img/wn/${icon}@4x.png` || '',
                   }}
                 />
               </View>
 
               <Text style={styles.weatherOutlookText}>
-                {capitalizeFirstLetterInWords(
-                  current?.weather[0]?.description || '',
-                )}
+                {description !== ''
+                  ? capitalizeFirstLetterInWords(description)
+                  : ''}
               </Text>
             </View>
           </View>
@@ -65,19 +96,22 @@ const WeatherDetails = () => {
                 <View style={styles.leftDataContainer}>
                   <Details
                     title="Pressure"
-                    value={`${current?.pressure || 0} hPa`}
+                    value={`${current?.main?.pressure || 0} hPa`}
                   />
                 </View>
 
                 <View style={styles.centerDataContainer}>
                   <Details
                     title="Humidity"
-                    value={`${current?.humidity || 0}`}
+                    value={`${current?.main?.humidity || 0}`}
                   />
                 </View>
 
                 <View style={{flex: 1}}>
-                  <Details title="Wind Degree" value={current?.wind_deg || 0} />
+                  <Details
+                    title="Wind Degree"
+                    value={current?.wind?.deg || 0}
+                  />
                 </View>
               </View>
             </View>
@@ -91,7 +125,7 @@ const WeatherDetails = () => {
             <View style={styles.centerDataContainer}>
               <Details
                 title="Wind Speed"
-                value={`${Math.round(current?.wind_speed || 0)} km/h`}
+                value={`${Math.round(current?.wind?.speed || 0)} km/h`}
               />
             </View>
 

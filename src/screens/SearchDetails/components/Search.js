@@ -1,32 +1,13 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TextInput} from 'react-native-paper';
-import {
-  Colors,
-  Images,
-  CityListData,
-  capitalizeFirstLetterInWords,
-} from '@app/constants';
-import {useSelector} from 'react-redux';
 
-const Search = ({cityName, setCityName}) => {
-  const isError = useSelector(state => state?.weather?.error);
-  const [inputTextValue, setInputTextValue] = useState('');
-  const submitCityName = text => {
-    setCityName(text);
-    isError !== null
-      ? alert(capitalizeFirstLetterInWords(isError?.message))
-      : CityListData.unshift({
-          city: text,
-          background: Images.sunriseCardBackground,
-        });
-    setInputTextValue('');
-  };
+const Search = ({cityName, setCityName, submitCityName}) => {
   return (
     <View style={styles.container}>
       <TextInput
         placeholder="Search your city"
-        value={inputTextValue}
+        // value={cityName}
         style={styles.textInputStyle}
         mode="outlined"
         theme={{roundness: 12}}
@@ -40,7 +21,7 @@ const Search = ({cityName, setCityName}) => {
             onPress={() => {}}
           />
         }
-        onChangeText={text => setInputTextValue(text)}
+        // onChangeText={text => setCityName(text)}
         onSubmitEditing={({nativeEvent: {text}}) => {
           submitCityName(text);
         }}

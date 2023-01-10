@@ -7,15 +7,17 @@ import {
   FlatList,
 } from 'react-native';
 import React from 'react';
-import {Colors, CityListData} from '@app/constants';
+import {Colors} from '@app/constants';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import uuid from 'react-uuid';
+import {getImage} from '@app/utils/getImage';
 
-const CityCard = ({cityName, setCityName}) => {
+const CityCard = ({cityName, onCityCardPress, CityListData}) => {
   const onPressAction = currentCity => {
-    setCityName(currentCity);
+    onCityCardPress(currentCity);
   };
 
   const renderItemCity = ({item}) => (
@@ -28,7 +30,7 @@ const CityCard = ({cityName, setCityName}) => {
         }
         onPress={() => onPressAction(item?.city)}>
         <ImageBackground
-          source={item?.background}
+          source={getImage(item?.background)}
           style={styles.backgroundContainer}
           imageStyle={{borderRadius: 20}}>
           <Text style={styles.textStyle}>{item?.city}</Text>
@@ -44,7 +46,7 @@ const CityCard = ({cityName, setCityName}) => {
         renderItem={renderItemCity}
         horizontal
         showsHorizontalScrollIndicator={false}
-        keyExtractor={item => item?.city}
+        keyExtractor={item => uuid()}
       />
     </View>
   );
