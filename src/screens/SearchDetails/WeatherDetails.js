@@ -36,8 +36,12 @@ const WeatherDetails = () => {
     : '';
 
   const submitCityName = text => {
-    dispatch(getCurrentWeather(text));
-    text !== '' ? setCityName(text) : alert('City cannot be empty');
+    if (text !== '') {
+      setCityName(text);
+      dispatch(getCurrentWeather(text));
+    } else {
+      alert('City cannot be empty');
+    }
   };
 
   const handleCityPress = city => {
