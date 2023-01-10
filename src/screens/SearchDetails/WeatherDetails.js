@@ -42,10 +42,8 @@ const WeatherDetails = () => {
 
   const handleCityPress = city => {
     setCityName(city);
-
     current = CityListData.filter(i => i.city === city)[0]?.data;
     dispatch(setCurrentCityData({cityName: current?.name, data: current}));
-    console.log(current);
   };
 
   return (
