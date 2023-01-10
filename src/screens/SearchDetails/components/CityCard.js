@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     marginHorizontal: wp('4.5%'),
   },
   cityCardContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     paddingBottom: wp('2.5%'),
   },
   backgroundContainer: {
