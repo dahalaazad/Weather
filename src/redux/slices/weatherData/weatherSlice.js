@@ -2,9 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  defaultWeatherData: {},
   defaultCities: [],
-  currentCity: '',
   weatherData: {},
   currentWeatherData: {},
   status: false,
