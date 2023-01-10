@@ -7,22 +7,17 @@ import {
   FlatList,
 } from 'react-native';
 import React from 'react';
-import {Colors, Images} from '@app/constants';
+import {Colors} from '@app/constants';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import uuid from 'react-uuid';
+import {getImage} from '@app/utils/getImage';
 
-const CityCard = ({cityName, setCityName}) => {
-  const cityCardData = [
-    {city: 'Kathmandu', background: Images.sunriseCardBackground},
-    {city: 'London', background: Images.rainyCardBackground},
-    {city: 'Mumbai', background: Images.sunriseCardBackground},
-    {city: 'Doha', background: Images.rainyCardBackground},
-  ];
-
+const CityCard = ({cityName, onCityCardPress, CityListData}) => {
   const onPressAction = currentCity => {
-    setCityName(currentCity);
+    onCityCardPress(currentCity);
   };
 
   const renderItemCity = ({item}) => (
@@ -35,7 +30,7 @@ const CityCard = ({cityName, setCityName}) => {
         }
         onPress={() => onPressAction(item?.city)}>
         <ImageBackground
-          source={item?.background}
+          source={getImage(item?.background)}
           style={styles.backgroundContainer}
           imageStyle={{borderRadius: 20}}>
           <Text style={styles.textStyle}>{item?.city}</Text>
@@ -47,11 +42,11 @@ const CityCard = ({cityName, setCityName}) => {
   return (
     <View style={styles.cityCardContainer}>
       <FlatList
-        data={cityCardData}
+        data={CityListData}
         renderItem={renderItemCity}
         horizontal
         showsHorizontalScrollIndicator={false}
-        keyExtractor={item => item?.city}
+        keyExtractor={item => uuid()}
       />
     </View>
   );
@@ -69,7 +64,7 @@ const styles = StyleSheet.create({
     marginHorizontal: wp('4.5%'),
   },
   cityCardContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     paddingBottom: wp('2.5%'),
   },
   backgroundContainer: {

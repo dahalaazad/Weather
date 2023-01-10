@@ -2,38 +2,105 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
+  defaultCities: [],
   weatherData: {},
+  currentWeatherData: {},
   status: false,
+  currentStatus: false,
   error: null,
+  currentError: null,
 };
 
 export const getWeather = createAsyncThunk(
   'weather/getWeather',
-  async cityName => {
-    const baseURL = 'https://api.openweathermap.org/data/2.5';
-    const appId = '8ec56ea21eb8c16a1b68e052c8f559d7';
+  async (cityName, {rejectWithValue}) => {
+    try {
+      const baseURL = 'https://api.openweathermap.org/data/2.5';
+      const appId = '8ec56ea21eb8c16a1b68e052c8f559d7';
 
-    const cityNameResponse = await axios.get(
-      `${baseURL}/forecast?q=${cityName}&units=metric&appid=${appId}`,
-    );
-    const lat = cityNameResponse?.data?.city?.coord?.lat || 0;
-    const long = cityNameResponse?.data?.city?.coord?.lon || 0;
+      const cityNameResponse = await axios.get(
+        `${baseURL}/forecast?q=${cityName}&units=metric&appid=${appId}`,
+      );
+      const lat = cityNameResponse?.data?.city?.coord?.lat || 0;
+      const long = cityNameResponse?.data?.city?.coord?.lon || 0;
 
-    const latLongResponse = await axios.get(
-      `${baseURL}/onecall?lat=${lat}&lon=${long}&units=metric&appid=${appId}`,
-    );
+      const latLongResponse = await axios.get(
+        `${baseURL}/onecall?lat=${lat}&lon=${long}&units=metric&appid=${appId}`,
+      );
 
-    return {
-      cityName: cityNameResponse?.data?.city?.name || 'Patan',
-      data: latLongResponse?.data || {},
-    };
+      return {
+        cityName: cityNameResponse?.data?.city?.name || 'Patan',
+        data: latLongResponse?.data || {},
+      };
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const getCurrentWeather = createAsyncThunk(
+  'weather/getCurrentWeather',
+  async (cityName, {dispatch, rejectWithValue}) => {
+    try {
+      const baseURL = 'https://api.openweathermap.org/data/2.5';
+      const appId = '8ec56ea21eb8c16a1b68e052c8f559d7';
+
+      const cityNameResponse = await axios.get(
+        `${baseURL}/weather?q=${cityName}&units=metric&appid=${appId}`,
+      );
+
+      dispatch(
+        addSearchedCity({
+          city: cityNameResponse?.data?.name,
+          data: cityNameResponse?.data,
+          background: '2',
+        }),
+      );
+      return {
+        cityName: cityNameResponse?.data?.name || 'Patan',
+        data: cityNameResponse?.data || {},
+      };
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      alert(error?.response?.data?.message);
+      return rejectWithValue(error.response.data);
+    }
   },
 );
 
 export const weatherSlice = createSlice({
   name: 'weather',
   initialState,
-  reducers: {},
+  reducers: {
+    addSearchedCity: (state, action) => {
+      if (
+        state.defaultCities.findIndex(i => i.city === action.payload.city) ===
+        -1
+      ) {
+        return {
+          ...state,
+          defaultCities: [action.payload, ...state.defaultCities],
+        };
+      } else {
+        alert('Duplicate City');
+        return {
+          ...state,
+          defaultCities: [...state.defaultCities],
+        };
+      }
+    },
+    setCurrentCityData: (state, action) => {
+      return {
+        ...state,
+        currentWeatherData: action.payload,
+      };
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getWeather.pending, (state, action) => {
@@ -41,14 +108,27 @@ export const weatherSlice = createSlice({
       })
       .addCase(getWeather.fulfilled, (state, action) => {
         state.status = true;
-        // Add any fetched posts to the array
         state.weatherData = action.payload;
       })
       .addCase(getWeather.rejected, (state, action) => {
         state.status = false;
         state.error = action.payload;
+      })
+      .addCase(getCurrentWeather.pending, (state, action) => {
+        state.currentStatus = false;
+      })
+      .addCase(getCurrentWeather.fulfilled, (state, action) => {
+        state.currentStatus = true;
+        state.currentError = null;
+        state.currentWeatherData = action.payload;
+      })
+      .addCase(getCurrentWeather.rejected, (state, action) => {
+        state.currentStatus = false;
+        state.currentError = action.payload;
       });
   },
 });
+
+export const {addSearchedCity, setCurrentCityData} = weatherSlice.actions;
 
 export default weatherSlice.reducer;
