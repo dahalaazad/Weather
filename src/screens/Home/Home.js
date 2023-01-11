@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {useCallback} from 'react';
 import {Colors, Images, capitalizeFirstLetterInWords} from '@app/constants';
-import {HourlyCard} from './components';
+import {DailyCard, HourlyCard} from './components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -33,6 +33,7 @@ const Home = () => {
     Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
+  const dailyCardData = daily || [];
 
   useFocusEffect(
     useCallback(() => {
@@ -44,6 +45,14 @@ const Home = () => {
     <HourlyCard
       icon={item?.weather[0]?.icon || ''}
       time={moment.unix(item?.dt || 0).format('h:mm A')}
+    />
+  );
+
+  const renderItemDaily = ({item}) => (
+    <DailyCard
+      icon={item?.weather[0]?.icon || ''}
+      time={item?.dt || 0}
+      temp={item?.temp?.day}
     />
   );
 
@@ -87,6 +96,16 @@ const Home = () => {
           </View>
 
           <View style={styles.bottomHalfScreen}>
+            <View>
+              <FlatList
+                data={dailyCardData}
+                renderItem={renderItemDaily}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={item => item?.dt}
+              />
+            </View>
+
             <View style={styles.hourlyCardContainer}>
               <FlatList
                 data={hourlyCardData}

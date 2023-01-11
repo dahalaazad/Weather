@@ -11,10 +11,10 @@ const DailyCard = ({icon, time, temp}) => {
   return (
     <TouchableOpacity style={styles.container}>
       <Text style={styles.textStyle}>
-        {moment(new Date()).format('D MMM YYYY') ===
+        {moment().format('D MMM YYYY') ===
         moment.unix(time || 0).format('D MMM YYYY')
           ? 'Today'
-          : moment.unix(time || 0).format('D MMM YYYY')}
+          : moment.unix(time || 0).format('D MMM')}
       </Text>
 
       <View style={{paddingBottom: hp('1%')}}>
