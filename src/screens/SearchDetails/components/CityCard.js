@@ -34,7 +34,9 @@ const CityCard = ({cityName, onCityCardPress, CityListData}) => {
           source={getImage(item?.background)}
           style={styles.backgroundContainer}
           imageStyle={{borderRadius: 20}}>
-          <Text style={styles.textStyle}>{item?.city}</Text>
+          <Text style={[styles.textStyle, {textAlign: 'center'}]}>
+            {item?.city}
+          </Text>
         </ImageBackground>
       </TouchableOpacity>
     </View>
