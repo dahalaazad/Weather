@@ -159,18 +159,18 @@ const styles = StyleSheet.create({
   cityTitleText: {
     textAlign: 'center',
     fontFamily: 'Poppins',
-    fontSize: 44,
+    fontSize: widthToDp(44),
     fontWeight: '800',
-    paddingBottom: 90,
+    paddingBottom: heightToDp(90),
     color: Colors.whiteColor,
   },
   bottomHalf: {
     flex: 1,
     justifyContent: 'space-evenly',
-    paddingHorizontal: 25,
+    paddingHorizontal: widthToDp(25),
     backgroundColor: 'rgba(52, 52, 52, 0.5)',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: heightToDp(30),
+    borderTopRightRadius: heightToDp(30),
   },
   weatherIconContainer: {
     flexDirection: 'row',
@@ -178,27 +178,27 @@ const styles = StyleSheet.create({
   },
   bigText: {
     fontFamily: 'Poppins',
-    fontSize: 72,
+    fontSize: widthToDp(72),
     fontWeight: '700',
     color: Colors.whiteColor,
-    paddingLeft: 10,
+    paddingLeft: widthToDp(10),
     alignSelf: 'center',
   },
   weatherCategoryText: {
     fontFamily: 'Poppins',
-    fontSize: 12,
+    fontSize: widthToDp(12),
     fontWeight: '400',
     color: Colors.whiteColor,
   },
   weatherDataText: {
     fontFamily: 'Poppins',
-    fontSize: 24,
+    fontSize: widthToDp(24),
     fontWeight: '400',
     color: Colors.whiteColor,
   },
   weatherOutlookText: {
     fontFamily: 'Poppins',
-    fontSize: 24,
+    fontSize: widthToDp(22),
     fontWeight: '600',
     color: Colors.whiteColor,
   },
@@ -215,11 +215,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: widthToDp(20),
   },
   weatherIconLogo: {
-    width:
-      // 170,
-      wp('45%'),
-    height:
-      // 100,
-      hp('15%'),
+    width: widthToDp(170),
+    height: heightToDp(100),
   },
 });
