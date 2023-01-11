@@ -1,11 +1,8 @@
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import {Colors} from '@app/constants';
 import moment from 'moment';
+import {heightToDp, widthToDp} from '@app/utils';
 
 const DailyCard = ({icon, time, temp}) => {
   return (
@@ -17,7 +14,7 @@ const DailyCard = ({icon, time, temp}) => {
           : moment.unix(time || 0).format('D MMM')}
       </Text>
 
-      <View style={{paddingBottom: hp('1%')}}>
+      <View style={{paddingBottom: heightToDp(5)}}>
         <Image
           style={styles.tinyLogo}
           source={{
@@ -36,22 +33,22 @@ export default DailyCard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderRadius: hp('2%'),
+    borderRadius: widthToDp(15),
     justifyContent: 'center',
-    marginHorizontal: hp('1%'),
+    marginHorizontal: widthToDp(10),
     alignItems: 'center',
-    height: hp('15%'),
-    width: wp('25%'),
+    height: heightToDp(100),
+    width: widthToDp(88),
     backgroundColor: 'rgba(135, 206, 235,0.4)',
   },
   textStyle: {
     fontFamily: 'Poppins',
     fontWeight: '600',
     color: Colors.whiteColor,
-    fontSize: 15,
+    fontSize: widthToDp(15),
   },
   tinyLogo: {
-    width: wp('15%'),
-    height: hp('5%'),
+    width: widthToDp(70),
+    height: heightToDp(40),
   },
 });

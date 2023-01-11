@@ -64,7 +64,7 @@ const Home = () => {
             <View style={[styles.row, styles.spaceBetween]}>
               <Text style={styles.textStyle}>{cityName || 'Kathmandu'} </Text>
 
-              <Text style={[styles.textStyle, {fontSize: 38}]}>
+              <Text style={styles.textStyle}>
                 {`${Math.round(current?.temp || 0)}°C`}
               </Text>
             </View>
@@ -96,7 +96,7 @@ const Home = () => {
           </View>
 
           <View style={styles.bottomHalfScreen}>
-            <View>
+            <View style={styles.hourlyCardContainer}>
               <FlatList
                 data={dailyCardData}
                 renderItem={renderItemDaily}
@@ -150,13 +150,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Poppins',
     fontWeight: '600',
-    fontSize: 28,
+    fontSize: 65,
   },
   smallTextStyle: {
     color: '#fff',
     fontFamily: 'Poppins',
-    fontWeight: '400',
-    fontSize: 15,
+    fontWeight: '600',
+    fontSize: 20,
   },
   fullFlex: {
     flex: 1,
