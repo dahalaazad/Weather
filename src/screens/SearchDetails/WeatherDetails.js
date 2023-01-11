@@ -13,6 +13,7 @@ import {
   setCurrentCity,
   setCurrentCityData,
 } from '@app/redux/slices/weatherData/weatherSlice';
+import {widthToDp, heightToDp} from '@app/utils';
 
 const WeatherDetails = () => {
   const dispatch = useDispatch();
@@ -36,16 +37,18 @@ const WeatherDetails = () => {
     : '';
 
   const submitCityName = text => {
-    dispatch(getCurrentWeather(text));
-    text !== '' ? setCityName(text) : alert('City cannot be empty');
+    if (text !== '') {
+      setCityName(text);
+      dispatch(getCurrentWeather(text));
+    } else {
+      alert('City cannot be empty');
+    }
   };
 
   const handleCityPress = city => {
     setCityName(city);
-
     current = CityListData.filter(i => i.city === city)[0]?.data;
     dispatch(setCurrentCityData({cityName: current?.name, data: current}));
-    console.log(current);
   };
 
   return (
@@ -103,14 +106,14 @@ const WeatherDetails = () => {
                 <View style={styles.centerDataContainer}>
                   <Details
                     title="Humidity"
-                    value={`${current?.main?.humidity || 0}`}
+                    value={`${current?.main?.humidity || 0}%`}
                   />
                 </View>
 
                 <View style={{flex: 1}}>
                   <Details
                     title="Wind Degree"
-                    value={current?.wind?.deg || 0}
+                    value={`${current?.wind?.deg || 0}°`}
                   />
                 </View>
               </View>
@@ -156,18 +159,18 @@ const styles = StyleSheet.create({
   cityTitleText: {
     textAlign: 'center',
     fontFamily: 'Poppins',
-    fontSize: 44,
+    fontSize: widthToDp(44),
     fontWeight: '800',
-    paddingBottom: 90,
+    paddingBottom: heightToDp(90),
     color: Colors.whiteColor,
   },
   bottomHalf: {
     flex: 1,
     justifyContent: 'space-evenly',
-    paddingHorizontal: 25,
+    paddingHorizontal: widthToDp(25),
     backgroundColor: 'rgba(52, 52, 52, 0.5)',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: heightToDp(30),
+    borderTopRightRadius: heightToDp(30),
   },
   weatherIconContainer: {
     flexDirection: 'row',
@@ -175,27 +178,27 @@ const styles = StyleSheet.create({
   },
   bigText: {
     fontFamily: 'Poppins',
-    fontSize: 72,
+    fontSize: widthToDp(72),
     fontWeight: '700',
     color: Colors.whiteColor,
-    paddingLeft: 10,
+    paddingLeft: widthToDp(10),
     alignSelf: 'center',
   },
   weatherCategoryText: {
     fontFamily: 'Poppins',
-    fontSize: 12,
+    fontSize: widthToDp(12),
     fontWeight: '400',
     color: Colors.whiteColor,
   },
   weatherDataText: {
     fontFamily: 'Poppins',
-    fontSize: 24,
+    fontSize: widthToDp(24),
     fontWeight: '400',
     color: Colors.whiteColor,
   },
   weatherOutlookText: {
     fontFamily: 'Poppins',
-    fontSize: 24,
+    fontSize: widthToDp(22),
     fontWeight: '600',
     color: Colors.whiteColor,
   },
@@ -205,14 +208,14 @@ const styles = StyleSheet.create({
   },
   leftDataContainer: {
     flex: 1,
-    marginLeft: 15,
+    marginLeft: widthToDp(15),
   },
   centerDataContainer: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: widthToDp(20),
   },
   weatherIconLogo: {
-    width: wp('45%'),
-    height: hp('15%'),
+    width: widthToDp(170),
+    height: heightToDp(100),
   },
 });

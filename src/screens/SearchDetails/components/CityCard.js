@@ -14,6 +14,7 @@ import {
 } from 'react-native-responsive-screen';
 import uuid from 'react-uuid';
 import {getImage} from '@app/utils/getImage';
+import {heightToDp, widthToDp} from '@app/utils';
 
 const CityCard = ({cityName, onCityCardPress, CityListData}) => {
   const onPressAction = currentCity => {
@@ -57,26 +58,27 @@ export default CityCard;
 const styles = StyleSheet.create({
   container: {},
   cityCardBorderContainer: {
-    height: hp('26.3%'),
-    width: wp('41%'),
+    height: heightToDp(180),
+    width: widthToDp(140),
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: wp('4.5%'),
+    marginHorizontal: widthToDp(20),
   },
   cityCardContainer: {
-    alignItems: 'center',
-    paddingBottom: wp('2.5%'),
+    alignItems: 'flex-start',
+    paddingBottom: heightToDp(10),
   },
   backgroundContainer: {
     flexDirection: 'row',
-    height: hp('25%'),
-    width: wp('40%'),
+    height: heightToDp(171),
+    width: widthToDp(140),
+
     justifyContent: 'space-evenly',
-    paddingTop: 20,
+    paddingTop: heightToDp(20),
     borderRadius: 0,
   },
   textStyle: {
-    fontSize: 24,
+    fontSize: widthToDp(24),
     color: Colors.whiteColor,
     fontWeight: '600',
   },
@@ -84,8 +86,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
-    borderWidth: 5,
+    borderWidth: widthToDp(5),
     borderColor: 'rgba(0,0,0,0.4)',
-    borderRadius: 25,
+    borderRadius: widthToDp(22),
   },
 });
