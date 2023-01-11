@@ -13,6 +13,7 @@ import {
   setCurrentCity,
   setCurrentCityData,
 } from '@app/redux/slices/weatherData/weatherSlice';
+import {widthToDp, heightToDp} from '@app/utils';
 
 const WeatherDetails = () => {
   const dispatch = useDispatch();
@@ -105,14 +106,14 @@ const WeatherDetails = () => {
                 <View style={styles.centerDataContainer}>
                   <Details
                     title="Humidity"
-                    value={`${current?.main?.humidity || 0}`}
+                    value={`${current?.main?.humidity || 0}%`}
                   />
                 </View>
 
                 <View style={{flex: 1}}>
                   <Details
                     title="Wind Degree"
-                    value={current?.wind?.deg || 0}
+                    value={`${current?.wind?.deg || 0}°`}
                   />
                 </View>
               </View>
@@ -207,14 +208,18 @@ const styles = StyleSheet.create({
   },
   leftDataContainer: {
     flex: 1,
-    marginLeft: 15,
+    marginLeft: widthToDp(15),
   },
   centerDataContainer: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: widthToDp(20),
   },
   weatherIconLogo: {
-    width: wp('45%'),
-    height: hp('15%'),
+    width:
+      // 170,
+      wp('45%'),
+    height:
+      // 100,
+      hp('15%'),
   },
 });
