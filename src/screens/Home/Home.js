@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {useCallback} from 'react';
 import {Colors, Images, capitalizeFirstLetterInWords} from '@app/constants';
-import {HourlyCard} from './components';
+import {DailyCard, HourlyCard} from './components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -33,6 +33,7 @@ const Home = () => {
     Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
+  const dailyCardData = daily || [];
 
   useFocusEffect(
     useCallback(() => {
@@ -47,6 +48,14 @@ const Home = () => {
     />
   );
 
+  const renderItemDaily = ({item}) => (
+    <DailyCard
+      icon={item?.weather[0]?.icon || ''}
+      time={item?.dt || 0}
+      temp={item?.temp?.day}
+    />
+  );
+
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
@@ -55,7 +64,7 @@ const Home = () => {
             <View style={[styles.row, styles.spaceBetween]}>
               <Text style={styles.textStyle}>{cityName || 'Kathmandu'} </Text>
 
-              <Text style={[styles.textStyle, {fontSize: 38}]}>
+              <Text style={styles.textStyle}>
                 {`${Math.round(current?.temp || 0)}°C`}
               </Text>
             </View>
@@ -87,6 +96,16 @@ const Home = () => {
           </View>
 
           <View style={styles.bottomHalfScreen}>
+            <View style={styles.hourlyCardContainer}>
+              <FlatList
+                data={dailyCardData}
+                renderItem={renderItemDaily}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={item => item?.dt}
+              />
+            </View>
+
             <View style={styles.hourlyCardContainer}>
               <FlatList
                 data={hourlyCardData}
@@ -131,13 +150,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Poppins',
     fontWeight: '600',
-    fontSize: 28,
+    fontSize: 65,
   },
   smallTextStyle: {
     color: '#fff',
     fontFamily: 'Poppins',
-    fontWeight: '400',
-    fontSize: 15,
+    fontWeight: '600',
+    fontSize: 20,
   },
   fullFlex: {
     flex: 1,
