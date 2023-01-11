@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import { Colors } from '@app/constants';
+import {Colors} from '@app/constants';
+import {widthToDp} from '@app/utils';
 
 const Details = ({title, value}) => {
   return (
@@ -17,13 +18,13 @@ export default Details;
 const styles = StyleSheet.create({
   weatherCategoryText: {
     fontFamily: 'Poppins',
-    fontSize: 12,
+    fontSize: widthToDp(12),
     fontWeight: '700',
     color: Colors.whiteColor,
   },
   weatherDataText: {
     fontFamily: 'Poppins',
-    fontSize: 24,
+    fontSize: widthToDp(18),
     fontWeight: '700',
     color: Colors.whiteColor,
   },
