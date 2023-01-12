@@ -1,4 +1,11 @@
-import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  Alert,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {capitalizeFirstLetterInWords, Colors, Images} from '@app/constants';
 import {Details, Search} from './components';
@@ -52,9 +59,19 @@ const WeatherDetails = () => {
     dispatch(setCurrentCityData({cityName: current?.name, data: current}));
   };
 
-  const deleteCityCard = city => {
-    dispatch(deleteSearchedCity(city));
-  };
+  const deleteCityCard = city =>
+    Alert.alert('Are you sure you want to delete?', '', [
+      {
+        text: 'Cancel',
+        onPress: () => {},
+        style: 'cancel',
+      },
+      {
+        text: 'Ok',
+        onPress: () => dispatch(deleteSearchedCity(city)),
+        style: 'default',
+      },
+    ]);
 
   return (
     <View style={styles.container}>
