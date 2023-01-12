@@ -9,6 +9,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {CityCard} from './components';
 import {
+  deleteSearchedCity,
   getCurrentWeather,
   setCurrentCity,
   setCurrentCityData,
@@ -51,6 +52,10 @@ const WeatherDetails = () => {
     dispatch(setCurrentCityData({cityName: current?.name, data: current}));
   };
 
+  const deleteCityCard = city => {
+    dispatch(deleteSearchedCity(city));
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
@@ -65,6 +70,7 @@ const WeatherDetails = () => {
             cityName={cityName}
             CityListData={CityListData}
             onCityCardPress={handleCityPress}
+            deleteCityCard={deleteCityCard}
           />
         </View>
 

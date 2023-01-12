@@ -94,6 +94,14 @@ export const weatherSlice = createSlice({
         };
       }
     },
+    deleteSearchedCity: (state, action) => {
+      return {
+        ...state,
+        defaultCities: state.defaultCities.filter(
+          item => item?.city !== action?.payload,
+        ),
+      };
+    },
     setCurrentCityData: (state, action) => {
       return {
         ...state,
@@ -129,6 +137,7 @@ export const weatherSlice = createSlice({
   },
 });
 
-export const {addSearchedCity, setCurrentCityData} = weatherSlice.actions;
+export const {addSearchedCity, deleteSearchedCity, setCurrentCityData} =
+  weatherSlice.actions;
 
 export default weatherSlice.reducer;

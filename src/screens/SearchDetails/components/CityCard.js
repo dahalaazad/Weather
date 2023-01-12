@@ -16,7 +16,12 @@ import uuid from 'react-uuid';
 import {getImage} from '@app/utils/getImage';
 import {heightToDp, widthToDp} from '@app/utils';
 
-const CityCard = ({cityName, onCityCardPress, CityListData}) => {
+const CityCard = ({
+  cityName,
+  onCityCardPress,
+  CityListData,
+  deleteCityCard,
+}) => {
   const onPressAction = currentCity => {
     onCityCardPress(currentCity);
   };
@@ -29,7 +34,8 @@ const CityCard = ({cityName, onCityCardPress, CityListData}) => {
             ? [styles.container, styles.selectedListItem]
             : styles.container
         }
-        onPress={() => onPressAction(item?.city)}>
+        onPress={() => onPressAction(item?.city)}
+        onLongPress={() => deleteCityCard(item?.city)}>
         <ImageBackground
           source={getImage(item?.background)}
           style={styles.backgroundContainer}
