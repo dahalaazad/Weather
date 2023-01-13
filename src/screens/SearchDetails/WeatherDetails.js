@@ -83,12 +83,14 @@ const WeatherDetails = () => {
             submitCityName={submitCityName}
           />
 
-          <CityCard
-            cityName={cityName}
-            CityListData={CityListData}
-            onCityCardPress={handleCityPress}
-            deleteCityCard={deleteCityCard}
-          />
+          <View style={{marginHorizontal: widthToDp(23)}}>
+            <CityCard
+              cityName={cityName}
+              CityListData={CityListData}
+              onCityCardPress={handleCityPress}
+              deleteCityCard={deleteCityCard}
+            />
+          </View>
         </View>
 
         <View style={styles.bottomHalf}>
