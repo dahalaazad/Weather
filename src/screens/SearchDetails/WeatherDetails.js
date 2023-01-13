@@ -1,4 +1,11 @@
-import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  Alert,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {capitalizeFirstLetterInWords, Colors, Images} from '@app/constants';
 import {Details, Search} from './components';
@@ -9,6 +16,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {CityCard} from './components';
 import {
+  deleteSearchedCity,
   getCurrentWeather,
   setCurrentCity,
   setCurrentCityData,
@@ -51,6 +59,20 @@ const WeatherDetails = () => {
     dispatch(setCurrentCityData({cityName: current?.name, data: current}));
   };
 
+  const deleteCityCard = city =>
+    Alert.alert('Are you sure you want to delete?', '', [
+      {
+        text: 'Cancel',
+        onPress: () => {},
+        style: 'cancel',
+      },
+      {
+        text: 'Ok',
+        onPress: () => dispatch(deleteSearchedCity(city)),
+        style: 'default',
+      },
+    ]);
+
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
@@ -61,11 +83,14 @@ const WeatherDetails = () => {
             submitCityName={submitCityName}
           />
 
-          <CityCard
-            cityName={cityName}
-            CityListData={CityListData}
-            onCityCardPress={handleCityPress}
-          />
+          <View style={{marginHorizontal: widthToDp(23)}}>
+            <CityCard
+              cityName={cityName}
+              CityListData={CityListData}
+              onCityCardPress={handleCityPress}
+              deleteCityCard={deleteCityCard}
+            />
+          </View>
         </View>
 
         <View style={styles.bottomHalf}>

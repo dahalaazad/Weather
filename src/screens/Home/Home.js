@@ -17,6 +17,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
+import {heightToDp, widthToDp} from '@app/utils';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const Home = () => {
     Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
-  const dailyCardData = daily || [];
+  const dailyCardData = daily.slice(1, 8) || [];
 
   useFocusEffect(
     useCallback(() => {
@@ -97,9 +98,11 @@ const Home = () => {
 
           <View style={styles.bottomHalfScreen}>
             <View style={styles.hourlyCardContainer}>
+              <Text style={styles.cardTitleText}> Overview</Text>
+
               <FlatList
-                data={dailyCardData}
-                renderItem={renderItemDaily}
+                data={hourlyCardData}
+                renderItem={renderItemHourly}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={item => item?.dt}
@@ -107,9 +110,11 @@ const Home = () => {
             </View>
 
             <View style={styles.hourlyCardContainer}>
+              <Text style={styles.cardTitleText}>Next 7 days</Text>
+
               <FlatList
-                data={hourlyCardData}
-                renderItem={renderItemHourly}
+                data={dailyCardData}
+                renderItem={renderItemDaily}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={item => item?.dt}
@@ -140,7 +145,7 @@ const styles = StyleSheet.create({
   },
   bottomHalfScreen: {
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
   },
   cityCardContainer: {
     alignItems: 'space-between',
@@ -180,8 +185,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   hourlyCardContainer: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     justifyContent: 'center',
-    paddingHorizontal: 15,
+    paddingHorizontal: widthToDp(15),
+  },
+  cardTitleText: {
+    color: '#fff',
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: widthToDp(20),
+    paddingBottom: heightToDp(5),
+    paddingLeft: widthToDp(15),
   },
 });
