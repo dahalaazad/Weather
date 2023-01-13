@@ -5,6 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Colors} from '@app/constants';
+import {widthToDp} from '@app/utils';
 
 const HourlyCard = ({icon, time}) => {
   return (
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: hp('2%'),
     justifyContent: 'center',
-    marginHorizontal: hp('1%'),
+    marginHorizontal: widthToDp(7),
     alignItems: 'center',
     height: hp('11%'),
     width: wp('19%'),
