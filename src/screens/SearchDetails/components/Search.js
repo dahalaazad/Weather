@@ -1,8 +1,10 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Keyboard} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {TextInput} from 'react-native-paper';
 
 const Search = ({cityName, setCityName, submitCityName}) => {
+  const [searchText, setSearchText] = useState('');
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -18,10 +20,13 @@ const Search = ({cityName, setCityName, submitCityName}) => {
           <TextInput.Icon
             // forceTextInputFocus={false}
             icon="search-web"
-            onPress={() => {}}
+            onPress={() => {
+              submitCityName(searchText);
+              Keyboard.dismiss();
+            }}
           />
         }
-        // onChangeText={text => setCityName(text)}
+        onChangeText={text => setSearchText(text)}
         onSubmitEditing={({nativeEvent: {text}}) => {
           submitCityName(text);
         }}
