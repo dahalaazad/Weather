@@ -17,7 +17,7 @@ const CityCard = ({
   CityListData,
   deleteCityCard,
   myRef,
-  highlightIndex,
+  highlightIndex = 0,
 }) => {
   const onPressAction = (currentCity, index) => {
     onCityCardPress(currentCity, index);
@@ -34,7 +34,7 @@ const CityCard = ({
   const renderItemCity = ({item, index}) => (
     <View style={styles.cityCardBorderContainer}>
       <TouchableOpacity
-        style={highlightedStyle(item, index)}
+        style={highlightedStyle(index)}
         onPress={() => onPressAction(item?.city, index)}
         onLongPress={() => deleteCityCard(item?.city)}>
         <ImageBackground
