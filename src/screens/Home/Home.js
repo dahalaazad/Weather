@@ -34,7 +34,7 @@ const Home = () => {
     Array.isArray(daily) && daily.length > 0 ? daily[0]?.temp?.max : 0;
 
   const hourlyCardData = hourly?.slice(0, 12) || [];
-  const dailyCardData = daily.slice(1, 8) || [];
+  const dailyCardData = daily?.slice(1, 8) || [];
 
   useFocusEffect(
     useCallback(() => {
