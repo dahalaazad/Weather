@@ -87,14 +87,9 @@ export const weatherSlice = createSlice({
           defaultCities: [action.payload, ...state.defaultCities],
         };
       } else {
-        // if (action?.payload?.city !== 'Patan') {
-        //   alert('Duplicate City');
-        // }
-
         return {
           ...state,
           defaultCities: [...state.defaultCities],
-          // isDuplicateCity: true,
         };
       }
     },
