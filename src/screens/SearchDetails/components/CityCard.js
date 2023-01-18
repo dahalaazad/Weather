@@ -16,7 +16,7 @@ const CityCard = ({
   onCityCardPress,
   CityListData,
   deleteCityCard,
-  myRef,
+  flatlistRef,
   highlightIndex = 0,
 }) => {
   const onPressAction = (currentCity, index) => {
@@ -51,7 +51,7 @@ const CityCard = ({
     <View style={styles.cityCardContainer}>
       <FlatList
         data={CityListData}
-        ref={myRef}
+        ref={flatlistRef}
         getItemLayout={(_, index) => ({
           length: widthToDp(190),
           offset: widthToDp(190) * (index - 1),

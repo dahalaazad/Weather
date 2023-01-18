@@ -19,7 +19,7 @@ import {
 import {widthToDp, heightToDp} from '@app/utils';
 
 const WeatherDetails = () => {
-  const myRef = useRef(null);
+  const flatlistRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -54,7 +54,7 @@ const WeatherDetails = () => {
           setHighlightIndex(duplicatedCityIndex);
 
           if (duplicatedCityIndex) {
-            myRef.current.scrollToIndex({
+            flatlistRef.current.scrollToIndex({
               animated: true,
               index: duplicatedCityIndex,
             });
@@ -92,7 +92,7 @@ const WeatherDetails = () => {
   const handleTextChange = text => {
     setSearchText(text);
     if (text === '') {
-      myRef.current.scrollToIndex({
+      flatlistRef.current.scrollToIndex({
         animated: true,
         index: 0,
       });
@@ -118,7 +118,7 @@ const WeatherDetails = () => {
               CityListData={CityListData}
               onCityCardPress={handleCityPress}
               deleteCityCard={deleteCityCard}
-              myRef={myRef}
+              flatlistRef={flatlistRef}
               highlightIndex={highlightIndex}
             />
           </View>
