@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: 20,
   },
   cityCardBorderContainer: {
-    height: heightToDp(175),
+    height: heightToDp(179),
     width: widthToDp(140),
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   backgroundContainer: {
     flexDirection: 'row',
     height: heightToDp(171),
-    width: widthToDp(140),
+    width: widthToDp(135),
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: heightToDp(20),
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
-    borderWidth: widthToDp(2),
-    borderColor: 'rgba(0,0,0,0.7)',
+    borderWidth: widthToDp(4),
+    borderColor: 'rgba(0,0,0,0.4)',
     borderRadius: widthToDp(22),
   },
 });
