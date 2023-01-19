@@ -1,3 +1,4 @@
+import {showToast} from '@app/constants/Utils';
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -67,8 +68,11 @@ export const getCurrentWeather = createAsyncThunk(
       if (!error.response) {
         throw error;
       }
-      alert(error?.response?.data?.message);
-      return rejectWithValue(error.response.data);
+      showToast(
+        'error',
+        `Error ${error?.response?.data?.cod}`,
+        error?.response?.data?.message,
+      );
     }
   },
 );
@@ -82,6 +86,11 @@ export const weatherSlice = createSlice({
         state.defaultCities.findIndex(i => i.city === action.payload.city) ===
         -1
       ) {
+        showToast(
+          'success',
+          'Success',
+          `${action?.payload?.city} added as CityCard`,
+        );
         return {
           ...state,
           defaultCities: [action.payload, ...state.defaultCities],

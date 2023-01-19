@@ -17,6 +17,7 @@ import {
   setCurrentCityData,
 } from '@app/redux/slices/weatherData/weatherSlice';
 import {widthToDp, heightToDp} from '@app/utils';
+import {showToast} from '@app/constants/Utils';
 
 const WeatherDetails = () => {
   const flatlistRef = useRef(null);
@@ -64,7 +65,7 @@ const WeatherDetails = () => {
           console.error(rejectedValueOrSerializedError);
         });
     } else {
-      alert('City cannot be empty');
+      showToast('warningToast', 'Error', 'City cannot be empty');
     }
   };
 
