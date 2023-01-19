@@ -65,7 +65,7 @@ const WeatherDetails = () => {
           console.error(rejectedValueOrSerializedError);
         });
     } else {
-      showToast('warningToast', 'Error', 'City cannot be empty');
+      showToast('warningToast', 'Warning', 'City cannot be empty');
     }
   };
 
