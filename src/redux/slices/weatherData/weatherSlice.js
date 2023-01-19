@@ -87,7 +87,6 @@ export const weatherSlice = createSlice({
           defaultCities: [action.payload, ...state.defaultCities],
         };
       } else {
-        alert('Duplicate City');
         return {
           ...state,
           defaultCities: [...state.defaultCities],

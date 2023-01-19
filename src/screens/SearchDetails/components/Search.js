@@ -2,9 +2,14 @@ import {View, Text, StyleSheet, Keyboard} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {TextInput} from 'react-native-paper';
 
-const Search = ({cityName, setCityName, submitCityName}) => {
-  const [searchText, setSearchText] = useState('');
-
+const Search = ({
+  cityName,
+  setCityName,
+  submitCityName,
+  searchText,
+  setSearchText,
+  handleTextChange,
+}) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -26,7 +31,7 @@ const Search = ({cityName, setCityName, submitCityName}) => {
             }}
           />
         }
-        onChangeText={text => setSearchText(text)}
+        onChangeText={text => handleTextChange(text)}
         onSubmitEditing={({nativeEvent: {text}}) => {
           submitCityName(text);
         }}

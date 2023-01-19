@@ -6,28 +6,26 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {capitalizeFirstLetterInWords, Colors, Images} from '@app/constants';
 import {Details, Search} from './components';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import {useDispatch, useSelector} from 'react-redux';
 import {CityCard} from './components';
 import {
   deleteSearchedCity,
   getCurrentWeather,
-  setCurrentCity,
   setCurrentCityData,
 } from '@app/redux/slices/weatherData/weatherSlice';
 import {widthToDp, heightToDp} from '@app/utils';
 
 const WeatherDetails = () => {
+  const flatlistRef = useRef(null);
+
   const dispatch = useDispatch();
 
   const [cityName, setCityName] = useState('Patan');
-  const [citySearchText, setCitySearchText] = useState('Patan');
+  const [searchText, setSearchText] = useState('');
+  const [highlightIndex, setHighlightIndex] = useState(null);
 
   const cityWeatherDetails = useSelector(
     state => state?.weather?.currentWeatherData || {},
@@ -47,13 +45,31 @@ const WeatherDetails = () => {
   const submitCityName = text => {
     if (text !== '') {
       setCityName(text);
-      dispatch(getCurrentWeather(text));
+      dispatch(getCurrentWeather(text))
+        .unwrap()
+        .then(originalPromiseResult => {
+          let duplicatedCityIndex = CityListData.findIndex(
+            item => item.city === originalPromiseResult?.cityName,
+          );
+          setHighlightIndex(duplicatedCityIndex);
+
+          if (duplicatedCityIndex) {
+            flatlistRef.current.scrollToIndex({
+              animated: true,
+              index: duplicatedCityIndex,
+            });
+          }
+        })
+        .catch(rejectedValueOrSerializedError => {
+          console.error(rejectedValueOrSerializedError);
+        });
     } else {
       alert('City cannot be empty');
     }
   };
 
-  const handleCityPress = city => {
+  const handleCityPress = (city, i) => {
+    setHighlightIndex(i);
     setCityName(city);
     current = CityListData.filter(i => i.city === city)[0]?.data;
     dispatch(setCurrentCityData({cityName: current?.name, data: current}));
@@ -73,6 +89,16 @@ const WeatherDetails = () => {
       },
     ]);
 
+  const handleTextChange = text => {
+    setSearchText(text);
+    if (text === '') {
+      flatlistRef.current.scrollToIndex({
+        animated: true,
+        index: 0,
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
@@ -81,6 +107,9 @@ const WeatherDetails = () => {
             cityName={cityName}
             setCityName={setCityName}
             submitCityName={submitCityName}
+            searchText={searchText}
+            setSearchText={setSearchText}
+            handleTextChange={handleTextChange}
           />
 
           <View style={{marginHorizontal: widthToDp(23)}}>
@@ -89,6 +118,8 @@ const WeatherDetails = () => {
               CityListData={CityListData}
               onCityCardPress={handleCityPress}
               deleteCityCard={deleteCityCard}
+              flatlistRef={flatlistRef}
+              highlightIndex={highlightIndex}
             />
           </View>
         </View>

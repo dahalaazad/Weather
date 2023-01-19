@@ -6,36 +6,36 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Colors, Images} from '@app/constants';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import uuid from 'react-uuid';
-import {getImage} from '@app/utils/getImage';
 import {heightToDp, widthToDp} from '@app/utils';
-import LinearGradient from 'react-native-linear-gradient';
 
 const CityCard = ({
   cityName,
   onCityCardPress,
   CityListData,
   deleteCityCard,
+  flatlistRef,
+  highlightIndex = 0,
 }) => {
-  const onPressAction = currentCity => {
-    onCityCardPress(currentCity);
+  const onPressAction = (currentCity, index) => {
+    onCityCardPress(currentCity, index);
   };
 
-  const renderItemCity = ({item}) => (
+  const highlightedStyle = currentIndex => {
+    if (currentIndex === highlightIndex) {
+      return [styles.container, styles.selectedListItem];
+    } else {
+      return styles.container;
+    }
+  };
+
+  const renderItemCity = ({item, index}) => (
     <View style={styles.cityCardBorderContainer}>
       <TouchableOpacity
-        style={
-          item?.city === cityName
-            ? [styles.container, styles.selectedListItem]
-            : styles.container
-        }
-        onPress={() => onPressAction(item?.city)}
+        style={highlightedStyle(index)}
+        onPress={() => onPressAction(item?.city, index)}
         onLongPress={() => deleteCityCard(item?.city)}>
         <ImageBackground
           style={styles.backgroundContainer}
@@ -51,6 +51,12 @@ const CityCard = ({
     <View style={styles.cityCardContainer}>
       <FlatList
         data={CityListData}
+        ref={flatlistRef}
+        getItemLayout={(_, index) => ({
+          length: widthToDp(190),
+          offset: widthToDp(190) * (index - 1),
+          index,
+        })}
         renderItem={renderItemCity}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -67,7 +73,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: 20,
   },
   cityCardBorderContainer: {
-    height: heightToDp(175),
+    height: heightToDp(179),
     width: widthToDp(140),
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
   backgroundContainer: {
     flexDirection: 'row',
     height: heightToDp(171),
-    width: widthToDp(140),
+    width: widthToDp(135),
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: heightToDp(20),
@@ -97,8 +103,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
-    borderWidth: widthToDp(2),
-    borderColor: 'rgba(0,0,0,0.7)',
+    borderWidth: widthToDp(4),
+    borderColor: 'rgba(0,0,0,0.4)',
     borderRadius: widthToDp(22),
   },
 });
