@@ -89,7 +89,7 @@ export const weatherSlice = createSlice({
         showToast(
           'success',
           'Success',
-          `${action?.payload?.city} added as CityCard`,
+          `${action?.payload?.city} added as city card`,
         );
         return {
           ...state,
