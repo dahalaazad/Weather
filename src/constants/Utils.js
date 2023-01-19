@@ -8,11 +8,11 @@ export const capitalizeFirstLetterInWords = str =>
         .join(' ')
     : str;
 
-export const showToast = (type, text1, text2, time) => {
+export const showToast = (type, title, subTitle, time) => {
   Toast.show({
     type: type,
-    text1: text1,
-    text2: text2,
+    text1: title,
+    text2: subTitle,
     visibilityTime: 2000,
     autoHide: true,
   });
