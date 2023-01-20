@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   View,
   Text,
   StyleSheet,
@@ -23,6 +24,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const weather = useSelector(state => state?.weather?.weatherData || {});
+  const status = useSelector(state => state?.weather?.status);
 
   const {cityName} = weather || {};
   const currentCity = cityName;
@@ -61,9 +63,15 @@ const Home = () => {
     <View style={styles.container}>
       <ImageBackground source={Images.sunnyDayBackground} style={{flex: 1}}>
         <View style={styles.fullScreenShadow}>
+          {!status && (
+            <View style={styles.loading}>
+              <ActivityIndicator size={widthToDp(100)} />
+            </View>
+          )}
+
           <View style={styles.topHalfScreen}>
             <View style={[styles.row, styles.spaceBetween]}>
-              <Text style={styles.textStyle}>{cityName || 'Kathmandu'} </Text>
+              <Text style={styles.textStyle}>{cityName || 'Your City'} </Text>
 
               <Text style={styles.textStyle}>
                 {`${Math.round(current?.temp || 0)}°C`}
@@ -137,6 +145,15 @@ const styles = StyleSheet.create({
   fullScreenShadow: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.4)',
+  },
+  loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   topHalfScreen: {
     flex: 1,
