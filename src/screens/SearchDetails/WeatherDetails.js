@@ -14,7 +14,6 @@ import {CityCard} from './components';
 import {
   deleteSearchedCity,
   getCurrentWeather,
-  setCurrentCityData,
 } from '@app/redux/slices/weatherData/weatherSlice';
 import {widthToDp, heightToDp} from '@app/utils';
 import {showToast} from '@app/constants/Utils';
@@ -33,8 +32,10 @@ const WeatherDetails = () => {
   );
   const CityListData = useSelector(state => state?.weather?.defaultCities);
 
+  const initialCity = CityListData.length > 0 ? CityListData[0]?.city : 'Patan';
+
   useEffect(() => {
-    dispatch(getCurrentWeather(cityName));
+    dispatch(getCurrentWeather(initialCity));
   }, []);
 
   let current = cityWeatherDetails?.data || {};
@@ -53,8 +54,9 @@ const WeatherDetails = () => {
             item => item.city === originalPromiseResult?.cityName,
           );
           setHighlightIndex(duplicatedCityIndex);
+          console.log(duplicatedCityIndex);
 
-          if (duplicatedCityIndex) {
+          if (duplicatedCityIndex > 0) {
             flatlistRef.current.scrollToIndex({
               animated: true,
               index: duplicatedCityIndex,
@@ -72,8 +74,8 @@ const WeatherDetails = () => {
   const handleCityPress = (city, i) => {
     setHighlightIndex(i);
     setCityName(city);
-    current = CityListData.filter(i => i.city === city)[0]?.data;
-    dispatch(setCurrentCityData({cityName: current?.name, data: current}));
+    current = CityListData.filter(item => item.city === city)[0]?.data;
+    dispatch(getCurrentWeather(city));
   };
 
   const deleteCityCard = city =>
