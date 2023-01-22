@@ -98,7 +98,7 @@ export const weatherSlice = createSlice({
           showToast(
             'warningToast',
             'Warning',
-            'Cannot add more than 10 cities',
+            `Cannot add ${action?.payload?.city} as limit has been reached`,
           );
         }
       } else {
