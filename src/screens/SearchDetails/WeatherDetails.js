@@ -54,7 +54,6 @@ const WeatherDetails = () => {
             item => item.city === originalPromiseResult?.cityName,
           );
           setHighlightIndex(duplicatedCityIndex);
-          console.log(duplicatedCityIndex);
 
           if (duplicatedCityIndex > 0) {
             flatlistRef.current.scrollToIndex({
