@@ -14,23 +14,23 @@ const initialState = {
 
 export const getWeather = createAsyncThunk(
   'weather/getWeather',
-  async (cityName, {rejectWithValue}) => {
+  async (location, {rejectWithValue}) => {
     try {
       const baseURL = 'https://api.openweathermap.org/data/2.5';
       const appId = '8ec56ea21eb8c16a1b68e052c8f559d7';
 
+      const lat = location?.coords?.latitude || 0;
+      const long = location?.coords?.longitude || 0;
+
       const cityNameResponse = await axios.get(
-        `${baseURL}/forecast?q=${cityName}&units=metric&appid=${appId}`,
+        `${baseURL}/weather?lat=${lat}&lon=${long}&units=metric&appid=${appId}`,
       );
-      const lat = cityNameResponse?.data?.city?.coord?.lat || 0;
-      const long = cityNameResponse?.data?.city?.coord?.lon || 0;
 
       const latLongResponse = await axios.get(
         `${baseURL}/onecall?lat=${lat}&lon=${long}&units=metric&appid=${appId}`,
       );
-
       return {
-        cityName: cityNameResponse?.data?.city?.name || 'Patan',
+        cityName: cityNameResponse?.data?.name || 'Patan',
         data: latLongResponse?.data || {},
       };
     } catch (error) {

@@ -7,7 +7,7 @@ import {
   ImageBackground,
   FlatList,
 } from 'react-native';
-import React, {useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Colors, Images, capitalizeFirstLetterInWords} from '@app/constants';
 import {DailyCard, HourlyCard} from './components';
 import {
@@ -18,16 +18,17 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getWeather} from '@app/redux/slices';
 import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
-import {heightToDp, widthToDp} from '@app/utils';
+import {heightToDp, widthToDp, requestLocationPermission} from '@app/utils';
+import Geolocation from 'react-native-geolocation-service';
 
 const Home = () => {
   const dispatch = useDispatch();
+  const [location, setLocation] = useState(false);
 
   const weather = useSelector(state => state?.weather?.weatherData || {});
   const status = useSelector(state => state?.weather?.status);
 
   const {cityName} = weather || {};
-  const currentCity = cityName;
   const {current, daily, hourly} = weather?.data || {};
 
   const minTemp =
@@ -40,8 +41,8 @@ const Home = () => {
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(getWeather('Patan'));
-    }, [dispatch, getWeather, cityName]),
+      getLocation();
+    }, []),
   );
 
   const renderItemHourly = ({item}) => (
@@ -58,6 +59,26 @@ const Home = () => {
       temp={item?.temp?.day}
     />
   );
+
+  // function to check permissions and get Location
+  const getLocation = () => {
+    const result = requestLocationPermission();
+
+    result.then(res => {
+      if (res) {
+        Geolocation.getCurrentPosition(
+          position => {
+            setLocation(position);
+            dispatch(getWeather(position));
+          },
+          error => {
+            setLocation(false);
+          },
+          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );
+      }
+    });
+  };
 
   return (
     <View style={styles.container}>
