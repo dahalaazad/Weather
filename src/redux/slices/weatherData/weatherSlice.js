@@ -56,8 +56,6 @@ export const getCurrentWeather = createAsyncThunk(
       dispatch(
         addSearchedCity({
           city: cityNameResponse?.data?.name,
-          data: cityNameResponse?.data,
-          background: '2',
         }),
       );
       return {
@@ -86,15 +84,23 @@ export const weatherSlice = createSlice({
         state.defaultCities.findIndex(i => i.city === action.payload.city) ===
         -1
       ) {
-        showToast(
-          'success',
-          'Success',
-          `${action?.payload?.city} added as city card`,
-        );
-        return {
-          ...state,
-          defaultCities: [action.payload, ...state.defaultCities],
-        };
+        if (state.defaultCities.length < 10) {
+          showToast(
+            'success',
+            'Success',
+            `${action?.payload?.city} added as a city card`,
+          );
+          return {
+            ...state,
+            defaultCities: [action.payload, ...state.defaultCities],
+          };
+        } else {
+          showToast(
+            'warningToast',
+            'Warning',
+            `Cannot add ${action?.payload?.city} as limit has been reached`,
+          );
+        }
       } else {
         return {
           ...state,
@@ -108,12 +114,6 @@ export const weatherSlice = createSlice({
         defaultCities: state.defaultCities.filter(
           item => item?.city !== action?.payload,
         ),
-      };
-    },
-    setCurrentCityData: (state, action) => {
-      return {
-        ...state,
-        currentWeatherData: action.payload,
       };
     },
   },
@@ -145,7 +145,6 @@ export const weatherSlice = createSlice({
   },
 });
 
-export const {addSearchedCity, deleteSearchedCity, setCurrentCityData} =
-  weatherSlice.actions;
+export const {addSearchedCity, deleteSearchedCity} = weatherSlice.actions;
 
 export default weatherSlice.reducer;

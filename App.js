@@ -49,13 +49,14 @@ const styles = StyleSheet.create({
   },
   toastWarningText: {
     color: '#000',
+    fontSize: widthToDp(17),
     fontFamily: 'Poppins',
     fontWeight: '700',
     paddingLeft: widthToDp(25),
   },
   toastWarningSmallText: {
     color: 'grey',
-    fontSize: widthToDp(10),
+    fontSize: widthToDp(14),
     paddingLeft: widthToDp(25),
   },
 });
