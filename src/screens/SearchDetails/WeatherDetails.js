@@ -30,7 +30,13 @@ const WeatherDetails = () => {
   const cityWeatherDetails = useSelector(
     state => state?.weather?.currentWeatherData || {},
   );
-  const CityListData = useSelector(state => state?.weather?.defaultCities);
+  const CityListDataFromStore = useSelector(
+    state => state?.weather?.defaultCities,
+  );
+
+  const CityListData = Array.isArray(CityListDataFromStore)
+    ? CityListDataFromStore
+    : [];
 
   const initialCity = CityListData.length > 0 ? CityListData[0]?.city : 'Patan';
 
