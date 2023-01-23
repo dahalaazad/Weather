@@ -5,8 +5,8 @@ export const requestLocationPermission = async () => {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       {
-        title: 'Geolocation Permission',
-        message: 'Can we access your location?',
+        title: 'Share Location',
+        message: "Allow Weather App to access this device's location?",
         buttonNeutral: 'Ask Me Later',
         buttonNegative: 'Cancel',
         buttonPositive: 'OK',
